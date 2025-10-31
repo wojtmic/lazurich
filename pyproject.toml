@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lazurich"
+description = "Modern Minecraft launcher"
+version = "1.0.0"
+authors = [ {name='Wojtmic', email='mail@wojtmic.dev'} ]
+
+requires-python = ">=3.13"
+
+#dependencies = [
+#
+#]
+
+#[project.scripts]
+#prefixer = "prefixer.cli:prefixer"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["lazurich*"]
+
+[project.urls]
+Homepage = "https://github.com/wojtmic/lazurich"
+Issues = "https://github.com/wojtmic/lazurich/issues"
