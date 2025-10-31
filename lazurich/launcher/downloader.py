@@ -116,8 +116,7 @@ async def download_version_libs(version: dict):
                 download_worker_lib(
                     client,
                     semaphore,
-                    asset['downloads']['artifact']['url'],
-                    asset['downloads']['artifact']['sha1']
+                    asset['downloads']['artifact']['url']
                 )
             )
 
