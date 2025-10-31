@@ -10,9 +10,15 @@ ASSET_STORAGE = os.path.expanduser('~/.local/share/lazurich/assets')
 LIB_STORAGE   = os.path.expanduser('~/.local/share/lazurich/libs')
 NATIVE_STORAGE= os.path.expanduser('~/.local/share/lazurich/natives')
 
+with open(os.path.expanduser('~/.local/share/lazurich/accounts.json')) as f:
+    content = f.read()
+    loads = json.loads(content)
+    OWNS_MC = loads['ownsMinecraft']
+
 os.makedirs(JAR_STORAGE,   exist_ok=True)
 os.makedirs(ASSET_STORAGE, exist_ok=True)
 os.makedirs(LIB_STORAGE,   exist_ok=True)
+os.makedirs(NATIVE_STORAGE,exist_ok=True)
 
 async def download_worker_assets(session: httpx.AsyncClient, semaphore: asyncio.Semaphore, url: str, file_hash: str):
     async with semaphore:
@@ -56,6 +62,8 @@ async def download_worker_lib(session: httpx.AsyncClient, semaphore: asyncio.Sem
             print(f'[FAILED] to download {url}, Mojang servers likely unreachable')
 
 def download_version_jar(version: dict, client: bool = True):
+    if not OWNS_MC: raise PermissionError('User does not own Minecraft!') # Temporarily use PermissionError until custom exceptions are implemented
+
     if client: url = version['downloads']['client']['url']
     else: url = version['downloads']['server']['url']
 
@@ -71,6 +79,7 @@ def download_version_jar(version: dict, client: bool = True):
                     f.write(chunk)
 
 async def download_version_assets(assetManifest: dict, version: str):
+    if not OWNS_MC: raise PermissionError('User does not own Minecraft!')  # Temporarily use PermissionError until custom exceptions are implemented
     semaphore = asyncio.Semaphore(15)
 
     with open(os.path.join(ASSET_STORAGE, 'indexes', f'{version}.json'), 'w') as f:
@@ -95,6 +104,7 @@ async def download_version_assets(assetManifest: dict, version: str):
         print('Finished downloading assets!')
 
 async def download_version_libs(version: dict):
+    if not OWNS_MC: raise PermissionError('User does not own Minecraft!')  # Temporarily use PermissionError until custom exceptions are implemented
     libs = version['libraries']
 
     semaphore = asyncio.Semaphore(10)

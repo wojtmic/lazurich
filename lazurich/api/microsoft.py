@@ -2,6 +2,7 @@ import msal
 import msal.exceptions
 import os
 import httpx
+import json
 
 BASE_DIR = os.path.expanduser('~/.local/share/lazurich')
 
@@ -144,6 +145,12 @@ def get_credentials(token: str):
 
         response = session.get(PROF_URL, headers=profile_headers)
         response.raise_for_status()
+
+        with open(os.path.join(BASE_DIR, 'accounts.json')) as f:
+            f.write(json.dumps({
+                'ownsMinecraft': True
+            }))
+
         profile_data = response.json()
 
         return {
