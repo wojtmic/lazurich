@@ -17,7 +17,7 @@ While all contribution is respected, there are guidelines.
 10. Include comments on confusing parts
 11. Keep code readable and maintainable by other people
 12. Be nice to maintainers and other contributors - we're all unpaid volunteers, just like you
-13. No monoliths are allowed - code should be modular and no file should exceed 100 lines (optimally 30-80)
+13. No monoliths are allowed - code should be modular and no file should exceed 100 lines (GUI code is an exception)
 14. For large changes (architectural, GUI changes or multifile rewrites) **open an issue first** - do not waste your time writing a massive PR that won't be accepted
 15. Use custom exceptions that are handled by the GUI - all internal exceptions (like httpx errors) MUST be translated to a handled Lazurich exception first
 16. High-impact, automated or non-"instant" actions must be logged
