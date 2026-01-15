@@ -27,17 +27,7 @@ SHA1      = STORE / 'sha1'
 MD5       = STORE / 'md5'
 
 def create_paths():
-    INSTANCES.mkdir(parents=True, exist_ok=True)
-    DATA.mkdir(parents=True, exist_ok=True)
-    STORE.mkdir(parents=True, exist_ok=True)
-    ASSETS.mkdir(parents=True, exist_ok=True)
-    NATIVES.mkdir(parents=True, exist_ok=True)
-    JARS.mkdir(parents=True, exist_ok=True)
-    TEMPLATES.mkdir(parents=True, exist_ok=True)
-    EXTENSIONS.mkdir(parents=True, exist_ok=True)
-    LOGS.mkdir(parents=True, exist_ok=True)
-
-    SHA256.mkdir(parents=True, exist_ok=True)
-    SHA512.mkdir(parents=True, exist_ok=True)
-    SHA1.mkdir(parents=True, exist_ok=True)
-    MD5.mkdir(parents=True, exist_ok=True)
+    all_dirs = [INSTANCES, DATA, STORE, ASSETS, NATIVES, JARS,
+                TEMPLATES, EXTENSIONS, LOGS, SHA256, SHA512, SHA1, MD5]
+    for directory in all_dirs:
+        directory.mkdir(parents=True, exist_ok=True)
