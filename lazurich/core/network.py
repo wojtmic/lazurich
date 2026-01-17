@@ -6,6 +6,7 @@ import anyio
 import httpx
 from lazurich import get_client
 from lazurich.core.models.general import DownloadItem
+from loguru import logger
 
 client = get_client()
 
@@ -20,7 +21,7 @@ class ChecksumError(DownloadError):
 async def download_file(item: DownloadItem, path: Path, chunk_size: int = 8192):
     hasher = hashlib.new(item.checksum_type)
 
-    print(f'Downloading {item.link}...')
+    logger.debug(f'Downloading {item.link}...', feature='core.network')
 
     try:
         async with client.stream("GET", item.link, follow_redirects=True) as response:
