@@ -16,7 +16,7 @@ EXTENSIONS= STORAGE_ROOT / 'extensions'
 LOGS      = STORAGE_ROOT / 'logs'
 
 # Data files
-CONFIG    = DATA / 'config.json'
+CONFIG    = Path('~/.config/lazurich.json').expanduser()
 ACCOUNTS  = DATA / 'accounts.json'
 TOKENS    = DATA / 'msal_token_cache-DO-NOT-SEND-TO-ANYONE.bin'
 
