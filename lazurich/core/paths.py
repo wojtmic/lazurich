@@ -32,7 +32,7 @@ SHA1      = STORE / 'sha1'
 MD5       = STORE / 'md5'
 
 def create_paths():
-    all_dirs = [INSTANCES, DATA, STORE, ASSETS, NATIVES, JARS,
+    all_dirs = [INSTANCES, DATA, STORE, ASSETS, JARS,
                 TEMPLATES, EXTENSIONS, SHA256, SHA512, SHA1, MD5, CONFIG_ROOT, LOG_ROOT]
     for directory in all_dirs:
         directory.mkdir(parents=True, exist_ok=True)
