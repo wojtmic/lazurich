@@ -1,5 +1,5 @@
 # Lazurich
-User-focused, feature-rich Minecraft launcher
+Infinitely hackable Minecraft launcher
 
 ## Features
 - Instance-based management
