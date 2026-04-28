@@ -17,7 +17,7 @@ If you are on Arch Linux (or any Arch-based distro), get it from the AUR under `
 **WARNING!** Lazurich is in a pre-release state. Expect bugs, crashes or slight unfinished behavior.
 
 ## System Requirements
-Supported on all modern operating systems (Win 10+, Linux with 6.2+ kernel, macOS 14+ or anything that runs Python 3.12 and JVM 8-25). Lazurich is built to be cross-platform, however please note that **Linux support is prioritized**.
+Supported on all modern operating systems (Win 10+, Linux with 6.2+ kernel, macOS 14+ or anything that runs Python 3.14 and JVM 8-25). Lazurich is built to be cross-platform, however please note that **Linux support is prioritized**.
 
 # Nerd Area
 ## Extensions

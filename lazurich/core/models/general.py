@@ -27,4 +27,3 @@ class Instance:
     version: str
     modloader: ModloaderEnum
     modloader_version: str
-    path: Path
