@@ -23,7 +23,6 @@ EXTENSIONS= STORAGE_ROOT / 'extensions'
 CONFIG    = CONFIG_ROOT / 'config.json'
 ACCOUNTS  = CONFIG_ROOT / 'accounts.json'
 INSTANCE  = CONFIG_ROOT / 'instances.json'
-TOKENS    = DATA / 'msal_token_cache-DO-NOT-SEND-TO-ANYONE.bin'
 
 # Store structure
 SHA256    = STORE / 'sha256'
