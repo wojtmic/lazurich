@@ -21,8 +21,8 @@ async def get_files(items: list[DownloadItem]):
     stored = [obj for obj in items if check_file_stored(obj)]
     missing = set(items) - set(stored)
 
-    items = list(map(lambda item: (item, get_file_path(item)), missing))
-    await download_batch([path for item, path in items])
+    pairs = [(item, get_file_path(item)) for item in missing]
+    await download_batch(pairs)
 
     paths = [get_file_path(item) for item in items]
 

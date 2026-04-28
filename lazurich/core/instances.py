@@ -10,7 +10,7 @@ from pathlib import Path
 
 async def read_manifest() -> list[Instance]:
     path = INSTANCE
-    if not path.exists: return []
+    if not path.exists(): return []
 
     async with aiofiles.open(INSTANCE, mode='r') as f:
         content = await f.read()
@@ -29,6 +29,8 @@ async def sanitize_dirname(raw_string: str):
 
 async def create_instance(instance: Instance):
     if instance in read_manifest(): raise AlreadyExistsException(f'Instance {instance.name} already exists!')
-    path = INSTANCES / sanitize_dirname(instance.name)
-    if path.exists: instance.path = f'{sanitize_dirname(instance.name)}-{randint(10000, 99999)}'
+    
+    path = INSTANCES / await sanitize_dirname(instance.name)
+
+    if path.exists(): instance.path = f'{await sanitize_dirname(instance.name)}-{randint(10000, 99999)}'
     else: instance.path = sanitize_dirname(instance.name)
