@@ -25,16 +25,16 @@ Extensions are small Python modules that can expand launcher functionality in an
 
 ## Tech Stack
 | Tech                | Version | Role                     |
-|---------------------| ------- |--------------------------|
-| Python              | 3.12 | Programming Language     |
-| `uv` | 0.9.25 | Quick project management |
-| `pyside6` (with QML) | 6.10.1 | GUI                      |
-| `qasync`            | 0.28.0 | Simple async for Qt      |
-| `httpx`             | 0.28.1 | Async networking         |
-| `pytest`            | 9.0.2 | Unit testing             |
-| `pytest-asyncio`    | 1.3.0 | Async tests              |
-| `respx`             | 0.22.0 | Networking tests         |
-| `loguru`            | 0.7.3 | Logging                  |
+|---------------------|---------|--------------------------|
+| Python              | 3.14    | Programming Language     |
+| `uv` | 0.9.25  | Quick project management |
+| `pyside6` (with QML) | 6.10.1  | GUI                      |
+| `qasync`            | 0.28.0  | Simple async for Qt      |
+| `httpx`             | 0.28.1  | Async networking         |
+| `pytest`            | 9.0.2   | Unit testing             |
+| `pytest-asyncio`    | 1.3.0   | Async tests              |
+| `respx`             | 0.22.0  | Networking tests         |
+| `loguru`            | 0.7.3   | Logging                  |
 
 ## Contributing
 Feel something could be done better? The code is GPL-3.0 - feel free to open a PR! The detailed contributions are [here](https://github.com/wojtmic/lazurich/linktoCONTRIBUTINGmdfile).
