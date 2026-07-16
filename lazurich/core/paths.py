@@ -8,6 +8,8 @@ xdg_config   = os.environ.get('XDG_CONFIG_HOME', '~/.config')
 STORAGE_ROOT = Path(xdg_storage).expanduser() / 'lazurich'
 LOG_ROOT     = Path(xdg_state)  .expanduser() / 'lazurich'
 CONFIG_ROOT  = Path(xdg_config) .expanduser() / 'lazurich'
+
+WORKING      = Path('/tmp/lazurich')
 SOCKET       = Path(f'/run/user/{os.getuid()}/lazurich.sock')
 
 # Storage subdirs
@@ -22,7 +24,7 @@ EXTENSIONS= STORAGE_ROOT / 'extensions'
 # Data files
 CONFIG    = CONFIG_ROOT / 'config.json'
 ACCOUNTS  = CONFIG_ROOT / 'accounts.json'
-INSTANCE  = CONFIG_ROOT / 'instances.json'
+INSTANCE  = CONFIG_ROOT / 'instances.toml'
 
 # Store structure
 SHA256    = STORE / 'sha256'
@@ -31,7 +33,7 @@ SHA1      = STORE / 'sha1'
 MD5       = STORE / 'md5'
 
 def create_paths():
-    all_dirs = [INSTANCES, DATA, STORE, ASSETS, JARS,
+    all_dirs = [INSTANCES, DATA, STORE, ASSETS, JARS, WORKING,
                 TEMPLATES, EXTENSIONS, SHA256, SHA512, SHA1, MD5, CONFIG_ROOT, LOG_ROOT]
     for directory in all_dirs:
         directory.mkdir(parents=True, exist_ok=True)

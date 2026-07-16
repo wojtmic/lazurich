@@ -8,27 +8,39 @@ import aiofiles
 import tomllib
 import tomli_w
 
-async def read_manifest() -> list[Instance]:
-    if not INSTANCE.exists(): return []
+async def read_manifest() -> dict[str, Instance]:
+    if not INSTANCE.exists(): return {}
 
     async with aiofiles.open(INSTANCE, mode='rb') as f:
         content = await f.read()
 
     data = tomllib.loads(content.decode())
-    return [Instance(**i) for i in data.get('instances', [])]
+    raw: dict = data.get('instances', {})
 
-async def write_manifest(instances: list[Instance]):
-    data = {'instances': [asdict(i) for i in instances]}
+    return {k: Instance(**v) for k, v in raw.items()}
 
+async def write_manifest(instances: dict[str, Instance]):
+    data = {'instances': {k: asdict(v) for k, v in instances.items()}}
+
+    if not INSTANCE.parent.exists(): INSTANCE.parent.mkdir(parents=True, exist_ok=True)
     async with aiofiles.open(INSTANCE, mode='wb') as f:
         await f.write(tomli_w.dumps(data).encode())
 
 async def create_instance(instance: Instance):
     instances = await read_manifest()
-    if instance in instances:
-        raise AlreadyExistsException(f'Instance {instance.name} already exists!')
 
     instance_id = gen_id()
     (INSTANCES / instance_id).mkdir(parents=True, exist_ok=True)
-    instances.append(instance)
+
+    instances[instance_id] = instance
     await write_manifest(instances)
+
+if __name__ == "__main__":
+    inst = Instance(
+        name='epic instnace',
+        version='26.1.2',
+        modloader=ModloaderEnum.VANILLA,
+        modloader_version=''
+    )
+    import asyncio
+    asyncio.run(create_instance(inst))

@@ -26,4 +26,8 @@ class Instance:
     name: str
     version: str
     modloader: ModloaderEnum
-    modloader_version: str
+
+    modloader_version: str = ''
+    last_played: int = -1
+    playtime: int = 0
+    icon: str = ''

@@ -33,5 +33,5 @@ async def download_version_manifest(version: str):
 
 if __name__ == "__main__":
     import asyncio
-    # asyncio.run(download_version_assets('1.21.1'))
-    asyncio.run(download_version_manifest('1.21.1'))
+    asyncio.run(download_version_assets('26.1.2'))
+    asyncio.run(download_version_manifest('26.1.2'))
