@@ -1,7 +1,7 @@
 import httpx
 from functools import lru_cache
 from lazurich.core.models.general import DownloadItem, ChecksumEnum
-from lazurich.core.store import get_file
+from lazurich.core.store import get_file_or_download
 
 @lru_cache(maxsize=None)
 def get_manifest():
@@ -70,4 +70,4 @@ if __name__ == '__main__':
     item = get_client_download('1.21.9')
     print(item)
 
-    print(get_file(item=item))
+    print(get_file_or_download(item=item))

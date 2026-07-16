@@ -13,24 +13,24 @@ WORKING      = Path('/tmp/lazurich')
 SOCKET       = Path(f'/run/user/{os.getuid()}/lazurich.sock')
 
 # Storage subdirs
-INSTANCES = STORAGE_ROOT / 'instances'
-DATA      = STORAGE_ROOT / 'data'
-STORE     = STORAGE_ROOT / 'store'
-ASSETS    = STORAGE_ROOT / 'assets'
-JARS      = STORAGE_ROOT / 'jars'
-TEMPLATES = STORAGE_ROOT / 'templates'
-EXTENSIONS= STORAGE_ROOT / 'extensions'
+INSTANCES  = STORAGE_ROOT / 'instances'
+DATA       = STORAGE_ROOT / 'data'
+STORE      = STORAGE_ROOT / 'store'
+ASSETS     = STORAGE_ROOT / 'assets'
+JARS       = STORAGE_ROOT / 'jars'
+TEMPLATES  = STORAGE_ROOT / 'templates'
+EXTENSIONS = STORAGE_ROOT / 'extensions'
 
 # Data files
-CONFIG    = CONFIG_ROOT / 'config.json'
-ACCOUNTS  = CONFIG_ROOT / 'accounts.json'
-INSTANCE  = CONFIG_ROOT / 'instances.toml'
+CONFIG     = CONFIG_ROOT / 'config.json'
+ACCOUNTS   = CONFIG_ROOT / 'accounts.json'
+INSTANCE   = CONFIG_ROOT / 'instances.toml'
 
 # Store structure
-SHA256    = STORE / 'sha256'
-SHA512    = STORE / 'sha512'
-SHA1      = STORE / 'sha1'
-MD5       = STORE / 'md5'
+SHA256     = STORE / 'sha256'
+SHA512     = STORE / 'sha512'
+SHA1       = STORE / 'sha1'
+MD5        = STORE / 'md5'
 
 def create_paths():
     all_dirs = [INSTANCES, DATA, STORE, ASSETS, JARS, WORKING,
