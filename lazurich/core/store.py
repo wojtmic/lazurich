@@ -20,8 +20,20 @@ async def store_file(src: Path, checksum_type: ChecksumEnum, name: str = Path.su
         path.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(src, path)
 
-    with dbm.open(STORE / checksum_type / 'index', 'c') as db:
+    with dbm.open(str(STORE / checksum_type / 'index'), 'c') as db:
         db[checksum] = name
+
+    with dbm.open(str(STORE / checksum_type / 'reverse_index'), 'c') as rdb:
+        rdb[name] = checksum
+
+def get_file_by_known_name(name: str, checksum_type: ChecksumEnum):
+    with dbm.open(STORE / checksum_type / 'reverse_index', 'r') as db:
+        checksum = db[name]
+        return get_file_path(DownloadItem(
+            checksum=checksum.decode(),
+            checksum_type=checksum_type,
+            link='fake://url'
+        ))
 
 def get_file_path(item: DownloadItem):
     return STORE / item.checksum_type.lower() / item.checksum[:2] / item.checksum

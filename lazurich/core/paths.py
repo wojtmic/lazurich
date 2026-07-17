@@ -20,6 +20,7 @@ ASSETS     = STORAGE_ROOT / 'assets'
 JARS       = STORAGE_ROOT / 'jars'
 TEMPLATES  = STORAGE_ROOT / 'templates'
 EXTENSIONS = STORAGE_ROOT / 'extensions'
+NATIVES    = STORAGE_ROOT / 'natives'
 
 # Data files
 CONFIG     = CONFIG_ROOT / 'config.json'
