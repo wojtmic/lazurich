@@ -1,3 +1,4 @@
+import os
 import zipfile
 from functools import lru_cache
 from pathlib import Path
@@ -89,7 +90,7 @@ def extract_natives(ver: str):
                     out.write(src.read())
 
 def get_libs_str(ver: str) -> str:
-    return ':'.join(
+    return os.pathsep.join(
         str(get_file_path(i)) for i in make_natives_downloads(ver)
         if not any(c in i.link for c in ("natives-linux", "natives-windows", "natives-macos", "natives-osx"))
     )

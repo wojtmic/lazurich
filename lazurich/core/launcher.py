@@ -1,5 +1,6 @@
 import subprocess
 from pathlib import Path
+import os
 
 from lazurich.api.microsoft import do_full_auth, get_msa_token
 from lazurich.api.mojang import get_for_version
@@ -13,7 +14,7 @@ def launch_game(ver: str, game_path: Path, profile: dict, token: str):
     manifest = get_for_version(ver)
     cmd = [
         'java', f'-Djava.library.path={NATIVES / ver}',
-        '-cp', get_libs_str(ver) + ':' + str(get_file_by_known_name(f'client-{ver}.jar', ChecksumEnum.SHA1)),
+        '-cp', get_libs_str(ver) + os.pathsep + str(get_file_by_known_name(f'client-{ver}.jar', ChecksumEnum.SHA1)),
         'net.minecraft.client.main.Main',
         '--username', profile['name'],
         '--version', ver,
