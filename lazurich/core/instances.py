@@ -34,6 +34,12 @@ async def create_instance(instance: Instance):
 
     instances[instance_id] = instance
     await write_manifest(instances)
+    return instance_id
+
+def fill_instance(id: str):
+    p = (INSTANCES / id)
+    (p / '.minecraft').mkdir(exist_ok=True)
+    (p / 'logs').mkdir(exist_ok=True)
 
 if __name__ == "__main__":
     inst = Instance(
@@ -43,4 +49,5 @@ if __name__ == "__main__":
         modloader_version=''
     )
     import asyncio
-    asyncio.run(create_instance(inst))
+    id = asyncio.run(create_instance(inst))
+    fill_instance(id)

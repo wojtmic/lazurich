@@ -89,9 +89,12 @@ def extract_natives(ver: str):
                     out.write(src.read())
 
 def get_libs_str(ver: str) -> str:
-    return ':'.join(str(get_file_path(i)) for i in make_natives_downloads(ver) if not 'native' in i.link)
+    return ':'.join(
+        str(get_file_path(i)) for i in make_natives_downloads(ver)
+        if not any(c in i.link for c in ("natives-linux", "natives-windows", "natives-macos", "natives-osx"))
+    )
 
 if __name__ == "__main__":
-    # import asyncio
-    # asyncio.run(download_natives('26.1.2'))
+    import asyncio
+    asyncio.run(download_natives('26.1.2'))
     extract_natives('26.1.2')

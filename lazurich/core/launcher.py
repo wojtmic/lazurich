@@ -1,5 +1,7 @@
 import subprocess
+from pathlib import Path
 
+from lazurich.api.microsoft import do_full_auth, get_msa_token
 from lazurich.api.mojang import get_for_version
 from lazurich.core.models.general import ChecksumEnum
 from lazurich.core.natives import get_libs_str
@@ -7,21 +9,26 @@ from lazurich.core.paths import NATIVES, ASSETS
 from lazurich.core.store import get_file_by_known_name
 
 
-def launch_game(ver: str):
+def launch_game(ver: str, game_path: Path, profile: dict, token: str):
     manifest = get_for_version(ver)
-    subprocess.run([
+    cmd = [
         'java', f'-Djava.library.path={NATIVES / ver}',
         '-cp', get_libs_str(ver) + ':' + str(get_file_by_known_name(f'client-{ver}.jar', ChecksumEnum.SHA1)),
         'net.minecraft.client.main.Main',
-        '--username', 'real',
+        '--username', profile['name'],
         '--version', ver,
-        '--gameDir', str('.minecraft'),
+        '--gameDir', str(game_path),
+        '--logFile', str(game_path / 'logs' / 'latest.log'),
         '--assetsDir', str(ASSETS),
         '--assetIndex', manifest['assetIndex']['id'],
-        '--uuid', '00-00-00000-00000-00000',
-        '--accessToken', '0',
-        '--userType', 'legacy',
-    ])
+        '--uuid', profile['id'],
+        '--accessToken', token,
+        '--userType', 'msa',
+    ]
+    subprocess.run(cmd)
 
 if __name__ == "__main__":
-    launch_game('26.1.2')
+    import asyncio
+    msa = get_msa_token()
+    prof, token = asyncio.run(do_full_auth(msa))
+    launch_game('26.1.2', Path('/home/wojtmic/.local/share/lazurich/instances/60168p19/.minecraft/'), prof, token)
