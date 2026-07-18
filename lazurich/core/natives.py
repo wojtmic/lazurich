@@ -22,7 +22,8 @@ def get_natives_for_version(ver: str):
             continue
 
         os_name = get_os_name()
-        arch = get_arch()
+
+        if ('-arm64', '-x86') in lib['name']: continue
 
         allowed = False
         for rule in lib['rules']:
@@ -34,8 +35,6 @@ def get_natives_for_version(ver: str):
             else:
                 match = True
                 if 'name' in os_rule and os_rule['name'] != os_name:
-                    match = False
-                if 'arch' in os_rule and os_rule['arch'] != arch:
                     match = False
 
             if match:
