@@ -8,7 +8,9 @@ from lazurich.core.models.general import DownloadItem, ChecksumEnum
 from lazurich.core.paths import STORE
 from lazurich.core.network import download_file, download_batch
 
-async def store_file(src: Path, checksum_type: ChecksumEnum, name: str = Path.suffix) -> None:
+async def store_file(src: Path, checksum_type: ChecksumEnum, name: str = None) -> None:
+    if not name: name = src.name
+
     hasher = hashlib.new(checksum_type.lower())
     async with aiofiles.open(src, "rb") as f:
         while chunk := await f.read(65536):

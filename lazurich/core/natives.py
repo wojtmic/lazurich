@@ -71,6 +71,8 @@ async def download_natives(ver: str):
     for i in p.iterdir():
         await store_file(i, ChecksumEnum.SHA1, map[str(i.name)])
 
+    rmtree(p)
+
 def extract_natives(ver: str):
     items = make_natives_downloads(ver)
     p = NATIVES / ver
