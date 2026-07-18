@@ -1,6 +1,7 @@
 import subprocess
 from pathlib import Path
 import os
+from loguru import logger
 
 from lazurich.api.microsoft import do_full_auth, get_msa_token
 from lazurich.api.mojang import get_for_version
@@ -23,9 +24,10 @@ def launch_game(ver: str, game_path: Path, profile: dict, token: str):
         '--assetsDir', str(ASSETS),
         '--assetIndex', manifest['assetIndex']['id'],
         '--uuid', profile['id'],
-        '--accessToken', token,
         '--userType', 'msa',
     ]
+    logger.debug(cmd)
+    cmd += ['--accessToken', token]
     subprocess.run(cmd)
 
 if __name__ == "__main__":
