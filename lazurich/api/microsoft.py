@@ -15,23 +15,26 @@ app = msal.PublicClientApplication(
     http_client=session,
 )
 
-def get_msa_token() -> str:
-    cached_token = keyring.get_password("lazurich", "msa_access_token")
-    cached_expiry = keyring.get_password("lazurich", "msa_expires_at")
+token_cache_access_token: str | None = None
+token_cache_expires_at: float = 0.0
 
-    if cached_token and cached_expiry and time.time() < float(cached_expiry):
-        return cached_token
+
+def get_msa_token() -> str:
+    global token_cache_access_token, token_cache_expires_at
+
+    if token_cache_access_token and time.time() < token_cache_expires_at:
+        return token_cache_access_token
 
     refresh_token = keyring.get_password("lazurich", "msa_refresh_token")
 
     if refresh_token:
         result = app.acquire_token_by_refresh_token(refresh_token, scopes=["XboxLive.signin"])
         if result and "access_token" in result:
-            keyring.set_password("lazurich", "msa_access_token", result["access_token"])
-            keyring.set_password("lazurich", "msa_expires_at", str(time.time() + result["expires_in"]))
+            token_cache_access_token = result["access_token"]
+            token_cache_expires_at = time.time() + result["expires_in"]
             if "refresh_token" in result:
                 keyring.set_password("lazurich", "msa_refresh_token", result["refresh_token"])
-            return result["access_token"]
+            return token_cache_access_token
 
     flow = app.initiate_device_flow(scopes=["XboxLive.signin"])
     if "user_code" not in flow:
@@ -43,11 +46,11 @@ def get_msa_token() -> str:
     if "access_token" not in result:
         raise RuntimeError(f"auth failed: {result.get('error_description')}")
 
-    keyring.set_password("lazurich", "msa_access_token", result["access_token"])
-    keyring.set_password("lazurich", "msa_expires_at", str(time.time() + result["expires_in"]))
+    token_cache_access_token = result["access_token"]
+    token_cache_expires_at = time.time() + result["expires_in"]
     keyring.set_password("lazurich", "msa_refresh_token", result["refresh_token"])
 
-    return result["access_token"]
+    return token_cache_access_token
 
 async def get_xbox_live_token(msa_token: str) -> tuple[str, str]:
     resp = await client.post(
