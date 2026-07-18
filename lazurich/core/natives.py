@@ -23,7 +23,7 @@ def get_natives_for_version(ver: str):
 
         os_name = get_os_name()
 
-        if ('-arm64', '-x86') in lib['name']: continue
+        if any(sub in lib['name'] for sub in ('-arm64', '-x86')): continue
 
         allowed = False
         for rule in lib['rules']:
