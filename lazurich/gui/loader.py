@@ -1,8 +1,9 @@
 from pathlib import Path
-
 from PySide6.QtCore import QUrl, Property, Signal
 from PySide6.QtQml import QQmlApplicationEngine, QmlElement, QQmlComponent
 from PySide6.QtQuick import QQuickItem
+
+from lazurich.gui.events import get_bridge
 
 QML_IMPORT_NAME = "Lazurich"
 QML_IMPORT_MAJOR_VERSION = 1
@@ -22,19 +23,15 @@ class GuiSlot(QQuickItem):
     def setContentItem(self, item: QQuickItem | None):
         if self._content_item is item:
             return
-
         if self._content_item is not None:
             self._content_item.setParentItem(None)
-
         self._content_item = item
-
         if item is not None:
             item.setParentItem(self)
             item.setX(0)
             item.setY(0)
             item.setWidth(self.width())
             item.setHeight(self.height())
-
         self.contentItemChanged.emit()
 
     contentItem = Property(QQuickItem, getContentItem, setContentItem, notify=contentItemChanged)
@@ -56,6 +53,8 @@ def init_qml(entry_file: str = "main.qml") -> QQmlApplicationEngine:
     global engine
     engine = QQmlApplicationEngine()
     engine.addImportPath(str(QML_DIR))
+
+    engine.rootContext().setContextProperty("eventBridge", get_bridge())
 
     entry = QML_DIR / entry_file
     engine.load(str(entry))
