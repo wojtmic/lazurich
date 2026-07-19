@@ -2,7 +2,7 @@ import random
 import string
 import platform
 
-_ALPHABET = string.ascii_lowercase + string.digits
+_ALPHABET = string.ascii_lowercase + string.ascii_uppercase + string.digits
 
 def gen_id() -> str:
     return ''.join(random.choices(_ALPHABET, k=8))

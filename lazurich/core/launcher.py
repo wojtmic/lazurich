@@ -28,7 +28,7 @@ def launch_game(ver: str, game_path: Path, profile: dict, token: str):
     ]
     logger.debug(cmd)
     cmd += ['--accessToken', token]
-    subprocess.run(cmd)
+    subprocess.run(cmd, cwd=game_path)
 
 if __name__ == "__main__":
     import asyncio

@@ -10,19 +10,19 @@ from lazurich.core.natives import download_natives, extract_natives
 from lazurich.core.paths import INSTANCES
 
 async def main():
-    await download_version_assets('26.1.2')
-    await download_version_manifest('26.1.2')
-    await download_natives('26.1.2')
-    extract_natives('26.1.2')
-    await download_version_jar('26.1.2')
+    await download_version_assets('1.20.1')
+    await download_version_manifest('1.20.1')
+    await download_natives('1.20.1')
+    extract_natives('1.20.1')
+    await download_version_jar('1.20.1')
 
-    inst = Instance(name='epic instnace', version='26.1.2', modloader=ModloaderEnum.VANILLA, modloader_version='')
+    inst = Instance(name='NOT epic instnace (1.20.1)', version='1.20.1', modloader=ModloaderEnum.VANILLA, modloader_version='')
     instance_id = await create_instance(inst)
     fill_instance(instance_id)
 
     msa = get_msa_token()
     prof, token = await do_full_auth(msa)
-    launch_game('26.1.2', INSTANCES / instance_id / '.minecraft', prof, token)
+    launch_game('1.20.1', INSTANCES / instance_id / '.minecraft', prof, token)
 
 if __name__ == "__main__":
     import asyncio
