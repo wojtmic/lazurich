@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from PySide6.QtCore import QUrl
+from PySide6.QtCore import QUrl, Property, Signal
 from PySide6.QtQml import QQmlApplicationEngine, QmlElement, QQmlComponent
 from PySide6.QtQuick import QQuickItem
 
@@ -10,7 +10,40 @@ QML_IMPORT_MAJOR_VERSION = 1
 
 @QmlElement
 class GuiSlot(QQuickItem):
-    pass
+    contentItemChanged = Signal()
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._content_item: QQuickItem | None = None
+
+    def getContentItem(self) -> QQuickItem | None:
+        return self._content_item
+
+    def setContentItem(self, item: QQuickItem | None):
+        if self._content_item is item:
+            return
+
+        if self._content_item is not None:
+            self._content_item.setParentItem(None)
+
+        self._content_item = item
+
+        if item is not None:
+            item.setParentItem(self)
+            item.setX(0)
+            item.setY(0)
+            item.setWidth(self.width())
+            item.setHeight(self.height())
+
+        self.contentItemChanged.emit()
+
+    contentItem = Property(QQuickItem, getContentItem, setContentItem, notify=contentItemChanged)
+
+    def geometryChange(self, newGeometry, oldGeometry):
+        super().geometryChange(newGeometry, oldGeometry)
+        if self._content_item is not None:
+            self._content_item.setWidth(newGeometry.width())
+            self._content_item.setHeight(newGeometry.height())
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -56,7 +89,6 @@ def load_qml(slot_id: str, file: str) -> QQuickItem:
     if item is None:
         raise RuntimeError(f"Failed to create item from {file}: {component.errorString()}")
 
-    item.setParentItem(slot)
-    item.setParent(slot)
+    slot.setContentItem(item)
 
     return item
