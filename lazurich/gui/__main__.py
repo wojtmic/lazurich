@@ -3,20 +3,10 @@ from pathlib import Path
 
 import qasync
 from PySide6.QtGui import QGuiApplication, QIcon, QPixmap
+from lazurich.gui.controllers.instances import InstanceController
 
-from lazurich.api.microsoft import get_msa_token, do_full_auth
-from lazurich.core.launcher import launch_game
-from lazurich.core.paths import INSTANCES
-
-from lazurich.gui.events import on_button_press
+from lazurich.gui import loader
 from lazurich.gui.loader import init_qml, load_qml
-
-
-@on_button_press('launchButton')
-async def launch_game_button():
-    msa = get_msa_token()
-    prof, token = await do_full_auth(msa)
-    launch_game('26.1.2', INSTANCES / '60168p19' / '.minecraft', prof, token)
 
 if __name__ == "__main__":
     app = QGuiApplication(sys.argv)
@@ -31,7 +21,11 @@ if __name__ == "__main__":
 
     init_qml()
 
-    load_qml('contentSlot', 'LaunchButton.qml')
+    instance_controller = InstanceController()
+    loader.engine.rootContext().setContextProperty("instanceController", instance_controller)
+    loader.engine.rootContext().setContextProperty("instanceModel", instance_controller.model)
+
+    load_qml('listSlot', 'List.qml')
 
     with loop:
         sys.exit(loop.run_forever())

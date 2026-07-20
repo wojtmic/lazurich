@@ -1,8 +1,13 @@
 from pathlib import Path
 from PySide6.QtCore import QUrl, Property, Signal
-from PySide6.QtQml import QQmlApplicationEngine, QmlElement, QQmlComponent
+from PySide6.QtQml import (
+    QQmlApplicationEngine,
+    QmlElement,
+    QQmlComponent,
+    QQmlEngine,
+    QQmlProperty,
+)
 from PySide6.QtQuick import QQuickItem
-
 from lazurich.gui.events import get_bridge
 
 QML_IMPORT_NAME = "Lazurich"
@@ -28,19 +33,12 @@ class GuiSlot(QQuickItem):
         self._content_item = item
         if item is not None:
             item.setParentItem(self)
-            item.setX(0)
-            item.setY(0)
-            item.setWidth(self.width())
-            item.setHeight(self.height())
+            # Bind the child's geometry to ours with anchors so the QML engine
+            # keeps it in sync on every resize.
+            QQmlProperty.write(item, "anchors.fill", self)
         self.contentItemChanged.emit()
 
     contentItem = Property(QQuickItem, getContentItem, setContentItem, notify=contentItemChanged)
-
-    def geometryChange(self, newGeometry, oldGeometry):
-        super().geometryChange(newGeometry, oldGeometry)
-        if self._content_item is not None:
-            self._content_item.setWidth(newGeometry.width())
-            self._content_item.setHeight(newGeometry.height())
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
@@ -53,41 +51,31 @@ def init_qml(entry_file: str = "main.qml") -> QQmlApplicationEngine:
     global engine
     engine = QQmlApplicationEngine()
     engine.addImportPath(str(QML_DIR))
-
     engine.rootContext().setContextProperty("eventBridge", get_bridge())
-
     entry = QML_DIR / entry_file
     engine.load(str(entry))
-
     if not engine.rootObjects():
         raise RuntimeError(f"Failed to load QML: {entry}")
-
     return engine
 
 
 def load_qml(slot_id: str, file: str) -> QQuickItem:
     if engine is None:
         raise RuntimeError("Call init_qml() before load_qml()")
-
     slot = None
     for root in engine.rootObjects():
         slot = root.findChild(QQuickItem, slot_id)
         if slot is not None:
             break
-
     if slot is None:
         raise ValueError(f"No GuiSlot found with objectName '{slot_id}'")
-
     component = QQmlComponent(engine, QUrl.fromLocalFile(str(QML_DIR / file)))
-
     if component.status() == QQmlComponent.Error:
         raise RuntimeError(f"Failed to load {file}: {component.errorString()}")
-
     item = component.create()
-
     if item is None:
         raise RuntimeError(f"Failed to create item from {file}: {component.errorString()}")
-
+    QQmlEngine.setObjectOwnership(item, QQmlEngine.ObjectOwnership.CppOwnership)
+    item.setParent(slot)
     slot.setContentItem(item)
-
     return item
