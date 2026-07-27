@@ -1,5 +1,6 @@
+from pathlib import Path
+
 import slint
-from stubs.main import AppWindow
 
 from lazurich.api.microsoft import get_msa_token, do_full_auth
 from lazurich.core.assets import download_version_assets, download_version_manifest
@@ -11,8 +12,7 @@ from lazurich.core.natives import extract_natives, download_natives
 from lazurich.core.paths import INSTANCES
 
 
-class App(slint.load_file("layouts/main.slint").AppWindow):
-
+class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppWindow):
     @slint.callback
     async def b_launch_game(self):
         await download_version_assets('1.20.1')
