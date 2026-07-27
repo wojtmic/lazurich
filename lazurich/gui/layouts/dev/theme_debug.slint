@@ -1,0 +1,105 @@
+import { Theme } from "../theme.slint";
+export { Theme }
+import { Button } from "std-widgets.slint";
+
+component ColorSwatch inherits Rectangle {
+    in property <string> label;
+    in property <color> swatch-color;
+    in property <color> text-color: Theme.text;
+
+    width: 160px;
+    height: 100px;
+    background: swatch-color;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: #000000;
+
+    Text {
+        text: label;
+        color: text-color;
+        font-size: 14px;
+        font-weight: 700;
+    }
+}
+
+component IconSwatch inherits Rectangle {
+    in property <string> label;
+    in property <image> icon;
+
+    width: 100px;
+    height: 100px;
+    background: Theme.secondary;
+    border-radius: 8px;
+
+    VerticalLayout {
+        alignment: center;
+        spacing: 8px;
+
+        Image {
+            source: icon;
+            width: 64px;
+            height: 64px;
+            x: (parent.width - self.width) / 2;
+        }
+
+        Rectangle {
+            Text {
+                text: label;
+                color: Theme.text;
+                font-size: 12px;
+                horizontal-alignment: center;
+            }
+        }
+    }
+}
+
+export component ThemeDebugWindow inherits Window {
+    title: "Theme Debug";
+    preferred-width: 700px;
+//    preferred-height: 500px;
+    background: Theme.background;
+    callback reload_theme();
+
+    VerticalLayout {
+        padding: 20px;
+        spacing: 20px;
+
+        HorizontalLayout {
+            Text {
+                text: "Colors";
+                color: Theme.text;
+                font-size: 18px;
+                font-weight: 700;
+            }
+            Rectangle { horizontal-stretch: 1; }
+            Button {
+                text: "Reload";
+                clicked => { reload_theme(); }
+            }
+        }
+
+
+        HorizontalLayout {
+            spacing: 12px;
+            ColorSwatch { label: "primary"; swatch-color: Theme.primary; }
+            ColorSwatch { label: "secondary"; swatch-color: Theme.secondary; }
+            ColorSwatch { label: "background"; swatch-color: Theme.background; }
+            ColorSwatch { label: "text"; swatch-color: Theme.text; text-color: Theme.text.darker(1); }
+        }
+
+        Text {
+            text: "Icons";
+            color: Theme.text;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        HorizontalLayout {
+            spacing: 12px;
+            IconSwatch { label: "dashboard"; icon: Theme.dashboard-icon; }
+            IconSwatch { label: "list"; icon: Theme.list-icon; }
+            IconSwatch { label: "settings"; icon: Theme.settings-icon; }
+            IconSwatch { label: "skin"; icon: Theme.skin-icon; }
+        }
+    }
+}

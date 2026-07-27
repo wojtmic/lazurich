@@ -1,34 +1,35 @@
 from pathlib import Path
-
 import slint
+from lazurich.gui.theme import apply_theme
+import os
+import sys
 
-from lazurich.api.microsoft import get_msa_token, do_full_auth
-from lazurich.core.assets import download_version_assets, download_version_manifest
-from lazurich.core.instances import fill_instance, create_instance
-from lazurich.core.jars import download_version_jar
-from lazurich.core.launcher import launch_game
-from lazurich.core.models.general import Instance, ModloaderEnum
-from lazurich.core.natives import extract_natives, download_natives
-from lazurich.core.paths import INSTANCES
+ThemeDebugWindow = slint.load_file(Path(__file__).parent / "layouts" / "dev" / "theme_debug.slint").ThemeDebugWindow
 
+THEME_DIR = Path(os.environ.get('LAZURICH_THEME', Path(__file__).parent / 'theme'))
 
 class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppWindow):
     @slint.callback
     async def b_launch_game(self):
-        await download_version_assets('1.20.1')
-        await download_version_manifest('1.20.1')
-        await download_natives('1.20.1')
-        extract_natives('1.20.1')
-        await download_version_jar('1.20.1')
+        print('game')
 
-        inst = Instance(name='NOT epic instnace (1.20.1)', version='1.20.1', modloader=ModloaderEnum.VANILLA,
-                        modloader_version='')
-        instance_id = await create_instance(inst)
-        fill_instance(instance_id)
+    _debug_window = None
 
-        msa = get_msa_token()
-        prof, token = await do_full_auth(msa)
-        launch_game('1.20.1', INSTANCES / instance_id / '.minecraft', prof, token)
+    def reload_theme(self):
+        apply_theme(self, THEME_DIR)
+        if self._debug_window is not None:
+            apply_theme(self._debug_window, THEME_DIR)
 
-app = App()
-app.run()
+    @slint.callback
+    async def open_theme_debug(self):
+        if self._debug_window is None:
+            self._debug_window = ThemeDebugWindow()
+            self._debug_window.reload_theme = self.reload_theme
+            apply_theme(self._debug_window, Path(__file__).parent / "theme")
+        self._debug_window.show()
+
+def main():
+    app = App()
+    apply_theme(app, Path(__file__).parent / "theme")
+    app.dev = os.environ.get('LAZURICH_DEV', 'false').lower() == 'true' or '--dev' in sys.argv
+    app.run()

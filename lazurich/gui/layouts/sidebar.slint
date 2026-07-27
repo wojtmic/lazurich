@@ -1,0 +1,12 @@
+import { Button, VerticalBox } from "std-widgets.slint";
+import { Theme } from "theme.slint";
+
+export component Sidebar inherits Rectangle {
+    width: 100px;
+    background: Theme.secondary;
+    height: 100%;
+
+    VerticalBox {
+        Rectangle { vertical-stretch: 1; }
+    }
+}

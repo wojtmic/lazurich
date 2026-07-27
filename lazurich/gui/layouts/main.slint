@@ -1,15 +1,35 @@
 import { Button, VerticalBox } from "std-widgets.slint";
+import { Sidebar } from "sidebar.slint";
+import { Theme } from "theme.slint";
+export { Theme }
 
 export component AppWindow inherits Window {
     callback b_launch_game();
+    callback open_theme_debug();
+    in property <bool> dev: false;
 
     title: "Lazurich";
     icon: @image-url("../assets/logo.png");
+    min-width: 600px;
+    min-height: 400px;
 
-    VerticalBox {
-        Button {
-            text: "launch the game";
-            clicked => { b_launch_game(); }
+    menu-bar := MenuBar {
+        Menu {
+            title: "Instance";
+            MenuItem { title: "Create New"; activated => { /* ... */ } }
+        }
+        if dev: Menu {
+            title: "Developer";
+            MenuItem { title: "Open theme debug"; activated => { open_theme_debug(); } }
+        }
+    }
+
+    HorizontalLayout {
+        height: 100%;
+        Sidebar {}
+        Rectangle {
+            background: Theme.background;
+            horizontal-stretch: 1;
         }
     }
 }
