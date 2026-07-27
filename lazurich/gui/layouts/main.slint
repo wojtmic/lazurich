@@ -1,0 +1,15 @@
+import { Button, VerticalBox } from "std-widgets.slint";
+
+export component AppWindow inherits Window {
+    callback b_launch_game();
+
+    title: "Lazurich";
+    icon: @image-url("../assets/logo.png");
+
+    VerticalBox {
+        Button {
+            text: "launch the game";
+            clicked => { b_launch_game(); }
+        }
+    }
+}

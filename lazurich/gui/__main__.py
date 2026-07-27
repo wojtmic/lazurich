@@ -1,31 +1,34 @@
-import sys
-from pathlib import Path
+import slint
+from stubs.main import AppWindow
 
-import qasync
-from PySide6.QtGui import QGuiApplication, QIcon, QPixmap
-from lazurich.gui.controllers.instances import InstanceController
+from lazurich.api.microsoft import get_msa_token, do_full_auth
+from lazurich.core.assets import download_version_assets, download_version_manifest
+from lazurich.core.instances import fill_instance, create_instance
+from lazurich.core.jars import download_version_jar
+from lazurich.core.launcher import launch_game
+from lazurich.core.models.general import Instance, ModloaderEnum
+from lazurich.core.natives import extract_natives, download_natives
+from lazurich.core.paths import INSTANCES
 
-from lazurich.gui import loader
-from lazurich.gui.loader import init_qml, load_qml
 
-if __name__ == "__main__":
-    app = QGuiApplication(sys.argv)
+class App(slint.load_file("layouts/main.slint").AppWindow):
 
-    pixmap = QPixmap(str(Path(__file__).resolve().parent / 'logo.png'))
-    icon = QIcon()
-    icon.addPixmap(pixmap)
-    app.setWindowIcon(icon)
+    @slint.callback
+    async def b_launch_game(self):
+        await download_version_assets('1.20.1')
+        await download_version_manifest('1.20.1')
+        await download_natives('1.20.1')
+        extract_natives('1.20.1')
+        await download_version_jar('1.20.1')
 
-    loop = qasync.QEventLoop(app)
-    qasync.asyncio.set_event_loop(loop)
+        inst = Instance(name='NOT epic instnace (1.20.1)', version='1.20.1', modloader=ModloaderEnum.VANILLA,
+                        modloader_version='')
+        instance_id = await create_instance(inst)
+        fill_instance(instance_id)
 
-    init_qml()
+        msa = get_msa_token()
+        prof, token = await do_full_auth(msa)
+        launch_game('1.20.1', INSTANCES / instance_id / '.minecraft', prof, token)
 
-    instance_controller = InstanceController()
-    loader.engine.rootContext().setContextProperty("instanceController", instance_controller)
-    loader.engine.rootContext().setContextProperty("instanceModel", instance_controller.model)
-
-    load_qml('listSlot', 'List.qml')
-
-    with loop:
-        sys.exit(loop.run_forever())
+app = App()
+app.run()
