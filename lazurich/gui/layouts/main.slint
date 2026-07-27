@@ -8,7 +8,8 @@ export component AppWindow inherits Window {
     callback open_theme_debug();
     in property <bool> dev: false;
 
-    title: "Lazurich";
+    title: dev ? "Lazurich (Developer)"
+    : "Lazurich";
     icon: @image-url("../assets/logo.png");
     min-width: 600px;
     min-height: 400px;

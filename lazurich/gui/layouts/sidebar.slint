@@ -1,12 +1,58 @@
 import { Button, VerticalBox } from "std-widgets.slint";
 import { Theme } from "theme.slint";
 
+component SidebarButton inherits TouchArea {
+    in property <image> icon;
+    callback activate();
+
+    width: 12%;
+    height: self.width;
+
+    clicked => { root.activate(); }
+
+    Rectangle {
+        border-radius: 6px;
+        background: parent.pressed
+            ? Theme.primary
+            : parent.has-hover
+                ? Theme.secondary.brighter(0.8)
+                : Theme.secondary.brighter(0.5);
+        animate background { duration: 100ms; }
+
+        Image {
+            source: icon;
+            width: parent.width;
+            height: parent.height;
+        }
+    }
+}
+
 export component Sidebar inherits Rectangle {
-    width: 100px;
+    width: 10%;
     background: Theme.secondary;
     height: 100%;
 
     VerticalBox {
+        SidebarButton {
+            icon: Theme.dashboard-icon;
+            height: self.width;
+            width: 12%;
+        }
+        SidebarButton {
+            icon: Theme.list-icon;
+            height: self.width;
+            width: 12%;
+        }
         Rectangle { vertical-stretch: 1; }
+        SidebarButton {
+            icon: Theme.skin-icon;
+            height: self.width;
+            width: 12%;
+        }
+        SidebarButton {
+            icon: Theme.settings-icon;
+            height: self.width;
+            width: 12%;
+        }
     }
 }
