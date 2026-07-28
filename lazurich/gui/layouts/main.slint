@@ -5,7 +5,7 @@ export { Theme }
 import { InstanceList } from "instance_list.slint";
 
 export component AppWindow inherits Window {
-    callback b_launch_game();
+    callback open_folder();
     callback open_theme_debug();
     in property <bool> dev: false;
 
@@ -24,6 +24,7 @@ export component AppWindow inherits Window {
         if dev: Menu {
             title: @tr("Developer");
             MenuItem { title: @tr("Open theme debug"); activated => { open_theme_debug(); } }
+            MenuItem { title: @tr("Open source folder"); activated => { open_folder(); } }
         }
     }
 

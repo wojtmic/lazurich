@@ -1,8 +1,10 @@
+import subprocess
 from pathlib import Path
 import slint
 import os
 import sys
 
+from lazurich.core.utils import get_os_name
 from lazurich.gui.theme import apply_theme
 from lazurich.gui.i18n import compile_translations, load_translations
 
@@ -16,8 +18,11 @@ THEME_DIR = Path(os.environ.get('LAZURICH_THEME', Path(__file__).parent / 'theme
 
 class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppWindow):
     @slint.callback
-    async def b_launch_game(self):
-        print('game')
+    async def open_folder(self):
+        if get_os_name() == 'windows':
+            subprocess.Popen(['explorer', Path(__file__).parent])
+        else:
+            subprocess.Popen(['xdg-open', Path(__file__).parent])
 
     _debug_window = None
 

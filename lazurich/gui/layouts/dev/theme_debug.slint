@@ -84,6 +84,10 @@ export component ThemeDebugWindow inherits Window {
             ColorSwatch { label: @tr("primary"); swatch-color: Theme.primary; }
             ColorSwatch { label: @tr("secondary"); swatch-color: Theme.secondary; }
             ColorSwatch { label: @tr("background"); swatch-color: Theme.background; }
+        }
+
+        HorizontalLayout {
+            spacing: 12px;
             ColorSwatch { label: @tr("button"); swatch-color: Theme.button; }
             ColorSwatch { label: @tr("sidebar"); swatch-color: Theme.sidebar; }
             ColorSwatch { label: @tr("text"); swatch-color: Theme.text; text-color: Theme.text.darker(1); }
