@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lazurich 0.1.0\n"
-"POT-Creation-Date: 2026-07-28 17:13+0000\n"
+"POT-Creation-Date: 2026-07-28 17:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -12,34 +12,39 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: lazurich/gui/layouts/main.slint:12
+#: lazurich/gui/layouts/main.slint:13
 msgctxt "AppWindow"
-msgid "Lazurich (Developer)"
+msgid "Devurich - {}"
 msgstr ""
 
-#: lazurich/gui/layouts/main.slint:13
+#: lazurich/gui/layouts/main.slint:14
 msgctxt "AppWindow"
 msgid "Lazurich"
 msgstr ""
 
-#: lazurich/gui/layouts/main.slint:21
+#: lazurich/gui/layouts/main.slint:22
 msgctxt "AppWindow"
 msgid "Instance"
 msgstr ""
 
-#: lazurich/gui/layouts/main.slint:22
+#: lazurich/gui/layouts/main.slint:23
 msgctxt "AppWindow"
 msgid "Create New"
 msgstr ""
 
-#: lazurich/gui/layouts/main.slint:25
+#: lazurich/gui/layouts/main.slint:26
 msgctxt "AppWindow"
 msgid "Developer"
 msgstr ""
 
-#: lazurich/gui/layouts/main.slint:26
+#: lazurich/gui/layouts/main.slint:27
 msgctxt "AppWindow"
 msgid "Open theme debug"
+msgstr ""
+
+#: lazurich/gui/layouts/main.slint:28
+msgctxt "AppWindow"
+msgid "Open source folder"
 msgstr ""
 
 #: lazurich/gui/layouts/dev/theme_debug.slint:57
@@ -72,42 +77,42 @@ msgctxt "ThemeDebugWindow"
 msgid "background"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:87
+#: lazurich/gui/layouts/dev/theme_debug.slint:91
 msgctxt "ThemeDebugWindow"
 msgid "button"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:88
+#: lazurich/gui/layouts/dev/theme_debug.slint:92
 msgctxt "ThemeDebugWindow"
 msgid "sidebar"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:89
+#: lazurich/gui/layouts/dev/theme_debug.slint:93
 msgctxt "ThemeDebugWindow"
 msgid "text"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:93
+#: lazurich/gui/layouts/dev/theme_debug.slint:97
 msgctxt "ThemeDebugWindow"
 msgid "Icons"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:101
+#: lazurich/gui/layouts/dev/theme_debug.slint:105
 msgctxt "ThemeDebugWindow"
 msgid "dashboard"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:102
+#: lazurich/gui/layouts/dev/theme_debug.slint:106
 msgctxt "ThemeDebugWindow"
 msgid "list"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:103
+#: lazurich/gui/layouts/dev/theme_debug.slint:107
 msgctxt "ThemeDebugWindow"
 msgid "settings"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:104
+#: lazurich/gui/layouts/dev/theme_debug.slint:108
 msgctxt "ThemeDebugWindow"
 msgid "skin"
 msgstr ""

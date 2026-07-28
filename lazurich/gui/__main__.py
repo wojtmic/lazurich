@@ -1,12 +1,22 @@
-import subprocess
 from pathlib import Path
 import slint
 import os
 import sys
+import subprocess
 
 from lazurich.core.utils import get_os_name
 from lazurich.gui.theme import apply_theme
 from lazurich.gui.i18n import compile_translations, load_translations
+
+def get_git_hash() -> str:
+    try:
+        return subprocess.check_output(
+            ["git", "rev-parse", "--short", "HEAD"],
+            cwd=Path(__file__).parent,
+            text=True,
+        ).strip()
+    except (subprocess.CalledProcessError, FileNotFoundError):
+        return "unknown"
 
 compile_translations()
 translations = load_translations(os.environ.get('LAZURICH_LOCALE', 'en_US'))
@@ -43,4 +53,5 @@ def main():
     app = App()
     apply_theme(app, Path(__file__).parent / "theme")
     app.dev = os.environ.get('LAZURICH_DEV', 'false').lower() == 'true' or '--dev' in sys.argv
+    app.git_hash = get_git_hash()
     app.run()

@@ -8,8 +8,9 @@ export component AppWindow inherits Window {
     callback open_folder();
     callback open_theme_debug();
     in property <bool> dev: false;
+    in property <string> git_hash: "";
 
-    title: dev ? @tr("Lazurich (Developer)")
+    title: dev ? @tr("Devurich - {}", root.git_hash)
     : @tr("Lazurich");
     icon: @image-url("../assets/logo.png");
     min-width: 600px;
