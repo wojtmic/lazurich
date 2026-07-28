@@ -1,6 +1,9 @@
 {
-    "primary": "#0377fc",
+    "primary": "#03befc",
     "secondary": "#2c3036",
     "background": "#191c24",
-    "text": "#d9e3fa"
+    "text": "#d9e3fa",
+
+    "button": "#0377fc",
+    "sidebar": "#2c3036"
 }

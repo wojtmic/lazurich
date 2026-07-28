@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: lazurich 0.1.0\n"
-"POT-Creation-Date: 2026-07-28 11:19+0000\n"
+"POT-Creation-Date: 2026-07-28 17:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,30 +74,40 @@ msgstr ""
 
 #: lazurich/gui/layouts/dev/theme_debug.slint:87
 msgctxt "ThemeDebugWindow"
+msgid "button"
+msgstr ""
+
+#: lazurich/gui/layouts/dev/theme_debug.slint:88
+msgctxt "ThemeDebugWindow"
+msgid "sidebar"
+msgstr ""
+
+#: lazurich/gui/layouts/dev/theme_debug.slint:89
+msgctxt "ThemeDebugWindow"
 msgid "text"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:91
+#: lazurich/gui/layouts/dev/theme_debug.slint:93
 msgctxt "ThemeDebugWindow"
 msgid "Icons"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:99
+#: lazurich/gui/layouts/dev/theme_debug.slint:101
 msgctxt "ThemeDebugWindow"
 msgid "dashboard"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:100
+#: lazurich/gui/layouts/dev/theme_debug.slint:102
 msgctxt "ThemeDebugWindow"
 msgid "list"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:101
+#: lazurich/gui/layouts/dev/theme_debug.slint:103
 msgctxt "ThemeDebugWindow"
 msgid "settings"
 msgstr ""
 
-#: lazurich/gui/layouts/dev/theme_debug.slint:102
+#: lazurich/gui/layouts/dev/theme_debug.slint:104
 msgctxt "ThemeDebugWindow"
 msgid "skin"
 msgstr ""

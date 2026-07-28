@@ -15,8 +15,8 @@ component SidebarButton inherits TouchArea {
         background: parent.pressed
             ? Theme.primary
             : parent.has-hover
-                ? Theme.secondary.brighter(0.8)
-                : Theme.secondary.brighter(0.5);
+                ? Theme.button.brighter(0.5)
+                : Theme.button;
         animate background { duration: 100ms; }
 
         Image {
@@ -29,7 +29,7 @@ component SidebarButton inherits TouchArea {
 
 export component Sidebar inherits Rectangle {
     width: 10%;
-    background: Theme.secondary;
+    background: Theme.sidebar;
     height: 100%;
 
     VerticalBox {
