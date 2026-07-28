@@ -9,8 +9,8 @@ export component AppWindow inherits Window {
     callback open_theme_debug();
     in property <bool> dev: false;
 
-    title: dev ? "Lazurich (Developer)"
-    : "Lazurich";
+    title: dev ? @tr("Lazurich (Developer)")
+    : @tr("Lazurich");
     icon: @image-url("../assets/logo.png");
     min-width: 600px;
     min-height: 400px;
@@ -18,12 +18,12 @@ export component AppWindow inherits Window {
 
     menu-bar := MenuBar {
         Menu {
-            title: "Instance";
-            MenuItem { title: "Create New"; activated => { /* ... */ } }
+            title: @tr("Instance");
+            MenuItem { title: @tr("Create New"); activated => { /* ... */ } }
         }
         if dev: Menu {
-            title: "Developer";
-            MenuItem { title: "Open theme debug"; activated => { open_theme_debug(); } }
+            title: @tr("Developer");
+            MenuItem { title: @tr("Open theme debug"); activated => { open_theme_debug(); } }
         }
     }
 

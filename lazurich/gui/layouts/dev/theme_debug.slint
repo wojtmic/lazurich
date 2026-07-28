@@ -54,7 +54,7 @@ component IconSwatch inherits Rectangle {
 }
 
 export component ThemeDebugWindow inherits Window {
-    title: "Theme Debug";
+    title: @tr("Theme Debug");
     preferred-width: 700px;
 //    preferred-height: 500px;
     background: Theme.background;
@@ -66,14 +66,14 @@ export component ThemeDebugWindow inherits Window {
 
         HorizontalLayout {
             Text {
-                text: "Colors";
+                text: @tr("Colors");
                 color: Theme.text;
                 font-size: 18px;
                 font-weight: 700;
             }
             Rectangle { horizontal-stretch: 1; }
             Button {
-                text: "Reload";
+                text: @tr("Reload");
                 clicked => { reload_theme(); }
             }
         }
@@ -88,7 +88,7 @@ export component ThemeDebugWindow inherits Window {
         }
 
         Text {
-            text: "Icons";
+            text: @tr("Icons");
             color: Theme.text;
             font-size: 18px;
             font-weight: 700;

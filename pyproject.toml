@@ -10,6 +10,7 @@ dependencies = [
     "keyring>=25.7.0",
     "loguru>=0.7.3",
     "msal>=1.37.0",
+    "polib>=1.2.0",
     "slint>=1.17.1b2",
     "tomli-w>=1.2.0",
 ]

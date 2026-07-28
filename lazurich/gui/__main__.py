@@ -1,8 +1,14 @@
 from pathlib import Path
 import slint
-from lazurich.gui.theme import apply_theme
 import os
 import sys
+
+from lazurich.gui.theme import apply_theme
+from lazurich.gui.i18n import compile_translations, load_translations
+
+compile_translations()
+translations = load_translations(os.environ.get('LAZURICH_LOCALE', 'en_US'))
+slint.init_translations(translations)
 
 ThemeDebugWindow = slint.load_file(Path(__file__).parent / "layouts" / "dev" / "theme_debug.slint").ThemeDebugWindow
 

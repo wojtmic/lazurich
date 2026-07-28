@@ -1,0 +1,43 @@
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: lazurich 0.1.0\n"
+"POT-Creation-Date: 2026-07-28 10:39+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: lazurich/gui/layouts/main.slint:12
+msgctxt "AppWindow"
+msgid "Lazurich (Developer)"
+msgstr ""
+
+#: lazurich/gui/layouts/main.slint:13
+msgctxt "AppWindow"
+msgid "Lazurich"
+msgstr ""
+
+#: lazurich/gui/layouts/main.slint:21
+msgctxt "AppWindow"
+msgid "Instance"
+msgstr ""
+
+#: lazurich/gui/layouts/main.slint:22
+msgctxt "AppWindow"
+msgid "Create New"
+msgstr ""
+
+#: lazurich/gui/layouts/main.slint:25
+msgctxt "AppWindow"
+msgid "Developer"
+msgstr ""
+
+#: lazurich/gui/layouts/main.slint:26
+msgctxt "AppWindow"
+msgid "Open theme debug"
+msgstr ""

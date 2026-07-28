@@ -1,4 +1,5 @@
 import tempfile
+from ctypes.wintypes import LANGID
 from pathlib import Path
 import os
 
@@ -38,6 +39,7 @@ EXTENSIONS = STORAGE_ROOT / 'extensions'
 NATIVES    = STORAGE_ROOT / 'natives'
 
 LOGS       = STATE_ROOT / 'logs'
+LANG       = STATE_ROOT / 'lang'
 
 # Data files
 CONFIG     = CONFIG_ROOT / 'config.json'
