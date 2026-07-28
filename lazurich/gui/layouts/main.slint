@@ -2,6 +2,7 @@ import { Button, VerticalBox } from "std-widgets.slint";
 import { Sidebar } from "sidebar.slint";
 import { Theme } from "theme.slint";
 export { Theme }
+import { InstanceList } from "instance_list.slint";
 
 export component AppWindow inherits Window {
     callback b_launch_game();
@@ -13,6 +14,7 @@ export component AppWindow inherits Window {
     icon: @image-url("../assets/logo.png");
     min-width: 600px;
     min-height: 400px;
+    background: Theme.background;
 
     menu-bar := MenuBar {
         Menu {
@@ -27,10 +29,14 @@ export component AppWindow inherits Window {
 
     HorizontalLayout {
         height: 100%;
+        spacing: 20px;
         Sidebar {}
         Rectangle {
-            background: Theme.background;
+            background: Theme.secondary;
             horizontal-stretch: 1;
+            InstanceList {
+                horizontal-stretch: 1;
+            }
         }
     }
 }
