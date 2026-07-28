@@ -81,10 +81,10 @@ export component ThemeDebugWindow inherits Window {
 
         HorizontalLayout {
             spacing: 12px;
-            ColorSwatch { label: "primary"; swatch-color: Theme.primary; }
-            ColorSwatch { label: "secondary"; swatch-color: Theme.secondary; }
-            ColorSwatch { label: "background"; swatch-color: Theme.background; }
-            ColorSwatch { label: "text"; swatch-color: Theme.text; text-color: Theme.text.darker(1); }
+            ColorSwatch { label: @tr("primary"); swatch-color: Theme.primary; }
+            ColorSwatch { label: @tr("secondary"); swatch-color: Theme.secondary; }
+            ColorSwatch { label: @tr("background"); swatch-color: Theme.background; }
+            ColorSwatch { label: @tr("text"); swatch-color: Theme.text; text-color: Theme.text.darker(1); }
         }
 
         Text {
@@ -96,10 +96,10 @@ export component ThemeDebugWindow inherits Window {
 
         HorizontalLayout {
             spacing: 12px;
-            IconSwatch { label: "dashboard"; icon: Theme.dashboard-icon; }
-            IconSwatch { label: "list"; icon: Theme.list-icon; }
-            IconSwatch { label: "settings"; icon: Theme.settings-icon; }
-            IconSwatch { label: "skin"; icon: Theme.skin-icon; }
+            IconSwatch { label: @tr("dashboard"); icon: Theme.dashboard-icon; }
+            IconSwatch { label: @tr("list"); icon: Theme.list-icon; }
+            IconSwatch { label: @tr("settings"); icon: Theme.settings-icon; }
+            IconSwatch { label: @tr("skin"); icon: Theme.skin-icon; }
         }
     }
 }
