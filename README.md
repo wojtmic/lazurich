@@ -4,7 +4,7 @@ Infinitely hackable Minecraft launcher
 ## Features
 - Instance-based management
 - Symlink-based mod storage (only on Linux/macOS - preserves disk space and bandwith waste)
-- Modern, intuitive Qt6 GUI
+- Modern, customizable GUI
 - Automated log analyzer
 - Advanced dependency graph resolver
 - Lightweight online instance exporting (small, single, sharable .json manifests)
@@ -29,7 +29,6 @@ Extensions are small Python modules that can expand launcher functionality in an
 | Python           | 3.14     | Programming Language     |
 | `uv`             | 0.9.25   | Quick project management |
 | `slint`          | 1.17.1b2 | GUI                      |
-| `qasync`         | 0.28.0   | Simple async for Qt      |
 | `httpx`          | 0.28.1   | Async networking         |
 | `pytest`         | 9.0.2    | Unit testing             |
 | `pytest-asyncio` | 1.3.0    | Async tests              |
