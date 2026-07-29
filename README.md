@@ -24,17 +24,22 @@ Supported on all modern operating systems (Win 10+, Linux with 6.2+ kernel, macO
 Extensions are small Python modules that can expand launcher functionality in any and all ways. The detailed guide on creating one is [here](https://linkto.docs)!
 
 ## Tech Stack
-| Tech                | Version | Role                     |
-|---------------------|---------|--------------------------|
-| Python              | 3.14    | Programming Language     |
-| `uv` | 0.9.25  | Quick project management |
-| `pyside6` (with QML) | 6.10.1  | GUI                      |
-| `qasync`            | 0.28.0  | Simple async for Qt      |
-| `httpx`             | 0.28.1  | Async networking         |
-| `pytest`            | 9.0.2   | Unit testing             |
-| `pytest-asyncio`    | 1.3.0   | Async tests              |
-| `respx`             | 0.22.0  | Networking tests         |
-| `loguru`            | 0.7.3   | Logging                  |
+| Tech             | Version  | Role                     |
+|------------------|----------|--------------------------|
+| Python           | 3.14     | Programming Language     |
+| `uv`             | 0.9.25   | Quick project management |
+| `slint`          | 1.17.1b2 | GUI                      |
+| `qasync`         | 0.28.0   | Simple async for Qt      |
+| `httpx`          | 0.28.1   | Async networking         |
+| `pytest`         | 9.0.2    | Unit testing             |
+| `pytest-asyncio` | 1.3.0    | Async tests              |
+| `respx`          | 0.22.0   | Networking tests         |
+| `loguru`         | 0.7.3    | Logging                  |
+| `msal`           | 1.37.0   | Microsoft auth API       |
+| `polib`          | 1.2.0    | i18n compilation to .mo  |
+| `slint-compiler` | 1.17.1b2 | GUI stub generation      |
+| `tomli-w`        | 1.2.0    | TOML file interactions   |
+| `keyring`        | 25.7.0   | Secure token storage     |
 
 ## Contributing
 Feel something could be done better? The code is GPL-3.0 - feel free to open a PR! The detailed contributions are [here](https://github.com/wojtmic/lazurich/linktoCONTRIBUTINGmdfile).
