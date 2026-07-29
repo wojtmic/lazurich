@@ -4,11 +4,21 @@ import { Theme } from "theme.slint";
 export { Theme }
 import { InstanceList } from "instance_list.slint";
 
+import { ProgressOverlay, ProgressStage } from "dialogues/progress.slint";
+export { ProgressStage }
+
 export component AppWindow inherits Window {
     callback open_folder();
     callback open_theme_debug();
+    callback preview_progress();
+
     in property <bool> dev: false;
     in property <string> git_hash: "";
+
+    in property <bool> progress-active: false;
+    in property <float> progress-value: 0.0;
+    in property <string> progress-stage: "";
+    in property <[ProgressStage]> progress-stages: [];
 
     title: dev ? @tr("Devurich - {}", root.git_hash)
     : @tr("Lazurich");
@@ -16,6 +26,7 @@ export component AppWindow inherits Window {
     min-width: 600px;
     min-height: 400px;
     background: Theme.background;
+
 
     menu-bar := MenuBar {
         Menu {
@@ -26,6 +37,7 @@ export component AppWindow inherits Window {
             title: @tr("Developer");
             MenuItem { title: @tr("Open theme debug"); activated => { open_theme_debug(); } }
             MenuItem { title: @tr("Open source folder"); activated => { open_folder(); } }
+            MenuItem { title: @tr("Preview progress overlay"); activated => { preview_progress(); } }
         }
     }
 
@@ -40,5 +52,14 @@ export component AppWindow inherits Window {
                 horizontal-stretch: 1;
             }
         }
+    }
+
+    ProgressOverlay {
+        width: 100%;
+        height: 100%;
+        active: root.progress-active;
+        progress: root.progress-value;
+        current-stage: root.progress-stage;
+        stages: root.progress-stages;
     }
 }

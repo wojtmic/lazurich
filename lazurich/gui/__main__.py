@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 import slint
 import os
@@ -5,6 +6,7 @@ import sys
 import subprocess
 
 from lazurich.core.utils import get_os_name
+from lazurich.gui.stubs.main import ProgressStage
 from lazurich.gui.theme import apply_theme
 from lazurich.gui.i18n import compile_translations, load_translations
 
@@ -27,6 +29,43 @@ ThemeDebugWindow = slint.load_file(Path(__file__).parent / "layouts" / "dev" / "
 THEME_DIR = Path(os.environ.get('LAZURICH_THEME', Path(__file__).parent / 'theme'))
 
 class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppWindow):
+    @slint.callback
+    async def preview_progress(self):
+        self.progress_active = True
+        self.progress_stage = "Thingamabobbing"
+        self.progress_value = 0
+        self.progress_stages = slint.ListModel([
+            {"text": "Thingamabobbing", "done": False, "active": True},
+            {"text": "Procrastinating", "done": False, "active": False},
+            {"text": "Goofing and Gaffing", "done": False, "active": False},
+            {"text": "Doohickeying", "done": False, "active": False},
+        ])
+        await asyncio.sleep(2)
+
+        self.progress_stages[0] = {"text": "Thingamabobbing", "done": True, "active": False}
+        self.progress_stages[1] = {"text": "Procrastinating", "done": False, "active": True}
+        self.progress_stage = "Procrastinating"
+        self.progress_value = 0.25
+        await asyncio.sleep(3)
+
+        self.progress_stages[1] = {"text": "Procrastinating", "done": True, "active": False}
+        self.progress_stages[2] = {"text": "Goofing and Gaffing", "done": False, "active": True}
+        self.progress_stage = "Goofing and Gaffing"
+        self.progress_value = 0.5
+        await asyncio.sleep(1)
+
+        self.progress_stages[2] = {"text": "Goofing and Gaffing", "done": True, "active": False}
+        self.progress_stages[3] = {"text": "Doohickeying", "done": False, "active": True}
+        self.progress_stage = "Doohickeying"
+        self.progress_value = 0.75
+        await asyncio.sleep(1)
+
+        self.progress_value = 1
+        await asyncio.sleep(2)
+
+
+        self.progress_active = False
+
     @slint.callback
     async def open_folder(self):
         if get_os_name() == 'windows':
