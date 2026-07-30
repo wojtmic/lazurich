@@ -1,31 +1,55 @@
 import { ListView } from "std-widgets.slint";
 import { Theme } from "theme.slint";
 
+export struct InstanceRow {
+    id: string,
+    name: string,
+    version: string,
+}
+
 export component InstanceList inherits Rectangle {
+    in property <[InstanceRow]> instances: [];
+    callback launch(string);
+
     background: Theme.secondary;
 
     ListView {
         width: 100%;
         height: 100%;
 
-        for name in ["Instance"]: Rectangle {
+        for row in root.instances: Rectangle {
             height: 68px;
             width: 90%;
             x: (parent.width - self.width) / 2;
             background: transparent;
 
-            Rectangle {
+            entry := Rectangle {
                 y: 4px;
                 height: 60px;
                 width: parent.width;
-                background: Theme.background;
+                background: entry-area.has-hover ? Theme.background.brighter(0.2) : Theme.background;
                 border-radius: 8px;
+                animate background { duration: 100ms; }
 
-                Text {
-                    text: name;
-                    color: Theme.text;
-                    horizontal-alignment: left;
-                    vertical-alignment: top;
+                entry-area := TouchArea {
+                    clicked => { root.launch(row.id); }
+                }
+
+                VerticalLayout {
+                    padding-left: 12px;
+                    alignment: center;
+
+                    Text {
+                        text: row.name;
+                        color: Theme.text;
+                        font-size: 14px;
+                        font-weight: 600;
+                    }
+                    Text {
+                        text: row.version;
+                        color: Theme.text.with-alpha(0.6);
+                        font-size: 11px;
+                    }
                 }
             }
         }

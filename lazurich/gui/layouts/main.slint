@@ -2,8 +2,8 @@ import { Button, VerticalBox } from "std-widgets.slint";
 import { Sidebar } from "sidebar.slint";
 import { Theme } from "theme.slint";
 export { Theme }
-import { InstanceList } from "instance_list.slint";
-
+import { InstanceList, InstanceRow } from "instance_list.slint";
+export { InstanceRow }
 import { ProgressOverlay, ProgressStage } from "dialogues/progress.slint";
 export { ProgressStage }
 
@@ -11,7 +11,7 @@ export component AppWindow inherits Window {
     callback open_folder();
     callback open_theme_debug();
     callback preview_progress();
-
+    callback launch_instance(string);
     in property <bool> dev: false;
     in property <string> git_hash: "";
 
@@ -19,6 +19,7 @@ export component AppWindow inherits Window {
     in property <float> progress-value: 0.0;
     in property <string> progress-stage: "";
     in property <[ProgressStage]> progress-stages: [];
+    in property <[InstanceRow]> instance-list: [];
 
     title: dev ? @tr("Devurich - {}", root.git_hash)
     : @tr("Lazurich");
@@ -26,7 +27,6 @@ export component AppWindow inherits Window {
     min-width: 600px;
     min-height: 400px;
     background: Theme.background;
-
 
     menu-bar := MenuBar {
         Menu {
@@ -50,6 +50,8 @@ export component AppWindow inherits Window {
             horizontal-stretch: 1;
             InstanceList {
                 horizontal-stretch: 1;
+                instances: root.instance-list;
+                launch(id) => { root.launch_instance(id); }
             }
         }
     }

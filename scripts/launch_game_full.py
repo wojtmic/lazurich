@@ -16,13 +16,13 @@ async def main():
     extract_natives('1.20.1')
     await download_version_jar('1.20.1')
 
-    inst = Instance(name='NOT epic instnace (1.20.1)', version='1.20.1', modloader=ModloaderEnum.VANILLA, modloader_version='')
-    instance_id = await create_instance(inst)
-    fill_instance(instance_id)
+    # inst = Instance(name='NOT epic instnace (1.20.1)', version='1.20.1', modloader=ModloaderEnum.VANILLA, modloader_version='')
+    # instance_id = await create_instance(inst)
+    # fill_instance(instance_id)
 
-    msa = get_msa_token()
-    prof, token = await do_full_auth(msa)
-    launch_game('1.20.1', INSTANCES / instance_id / '.minecraft', prof, token)
+    # msa = get_msa_token()
+    # prof, token = await do_full_auth(msa)
+    # launch_game('1.20.1', INSTANCES / instance_id / '.minecraft', prof, token)
 
 if __name__ == "__main__":
     import asyncio
