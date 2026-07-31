@@ -1,0 +1,22 @@
+import { Button } from "std-widgets.slint";
+
+export component ErrorDialog inherits Window {
+    title: "Already Running";
+    width: 300px;
+    height: 120px;
+
+    VerticalLayout {
+        padding: 16px;
+        spacing: 12px;
+
+        Text {
+            text: "Lazurich is already running.";
+            wrap: word-wrap;
+        }
+
+        Button {
+            text: "OK";
+            clicked => { root.hide(); }
+        }
+    }
+}

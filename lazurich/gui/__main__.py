@@ -4,12 +4,14 @@ import slint
 import os
 import sys
 import subprocess
+import socket
+import ctypes
+from ctypes import wintypes
 
-from lazurich.api.microsoft import do_full_auth, get_msa_token, get_xbox_live_token, get_xsts_token, \
-    get_minecraft_token, get_minecraft_profile
+from lazurich.api.microsoft import get_msa_token, get_xbox_live_token, get_xsts_token, get_minecraft_token, get_minecraft_profile
 from lazurich.core.instances import read_manifest
 from lazurich.core.launcher import launch_game
-from lazurich.core.paths import INSTANCES
+from lazurich.core.paths import INSTANCES, SOCKET
 from lazurich.core.utils import get_os_name
 from lazurich.gui.theme import apply_theme
 from lazurich.gui.i18n import compile_translations, load_translations
@@ -160,7 +162,27 @@ async def load_instances(app):
     app._instance_list_model = model
     app.instance_list = model
 
+def show_already_running_error():
+    dialog = slint.load_file(Path(__file__).parent / "layouts" / "popups" / "already_running.slint").ErrorDialog()
+    dialog.show()
+    dialog.run()
+    sys.exit(0)
+
 def main():
+    if get_os_name() != "windows":
+        sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+        try:
+            sock.bind(str(SOCKET))
+        except OSError:
+            show_already_running_error()
+        sock.listen(1)
+    else:
+        kernel32 = ctypes.windll.kernel32
+
+        mutex = kernel32.CreateMutexW(None, False, "Global\\Lazurich")
+        if ctypes.get_last_error() == 183:
+            show_already_running_error()
+
     app = App()
     apply_theme(app, Path(__file__).parent / "theme")
     app.dev = os.environ.get('LAZURICH_DEV', 'false').lower() == 'true' or '--dev' in sys.argv
@@ -170,3 +192,9 @@ def main():
     app.show()
     slint.run_event_loop(load_instances(app))
     app.hide()
+
+    if get_os_name() != 'windows':
+        sock.close()
+        os.unlink(SOCKET)
+    else:
+        kernel32.CloseHandle(mutex)
