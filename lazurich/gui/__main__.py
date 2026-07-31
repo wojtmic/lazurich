@@ -175,13 +175,17 @@ def main():
             sock.bind(str(SOCKET))
         except OSError:
             show_already_running_error()
+            return
         sock.listen(1)
     else:
-        kernel32 = ctypes.windll.kernel32
+        kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+        kernel32.CreateMutexW.restype = wintypes.HANDLE
+        kernel32.CreateMutexW.argtypes = [wintypes.LPCVOID, wintypes.BOOL, wintypes.LPCWSTR]
 
         mutex = kernel32.CreateMutexW(None, False, "Global\\Lazurich")
         if ctypes.get_last_error() == 183:
             show_already_running_error()
+            return
 
     app = App()
     apply_theme(app, Path(__file__).parent / "theme")
