@@ -21,14 +21,7 @@ CONFIG_ROOT  = Path(config) .expanduser() / 'lazurich'
 
 WORKING      = Path(tempfile.gettempdir()) / 'lazurich'
 
-if get_os_name() != 'windows':
-    # DEV NOTE #1
-    # Socket can also be a lockfile, on Windows. If it's a lockfile, USING_SOCKET will be False
-    SOCKET       = Path(f'/run/user/{os.getuid()}/lazurich.sock')
-    USING_SOCKET = True
-else:
-    SOCKET       = STATE_ROOT / 'lockfile'
-    USING_SOCKET = False
+SOCKET       = Path(f'/run/user/{os.getuid()}/lazurich.sock')
 
 # Storage subdirs
 INSTANCES  = STORAGE_ROOT / 'instances'
