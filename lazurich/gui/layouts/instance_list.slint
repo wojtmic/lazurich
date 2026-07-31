@@ -11,7 +11,7 @@ export component InstanceList inherits Rectangle {
     in property <[InstanceRow]> instances: [];
     callback launch(string);
 
-    background: Theme.secondary;
+    background: Theme.background;
 
     ListView {
         width: 100%;
@@ -27,7 +27,7 @@ export component InstanceList inherits Rectangle {
                 y: 4px;
                 height: 60px;
                 width: parent.width;
-                background: entry-area.has-hover ? Theme.background.brighter(0.2) : Theme.background;
+                background: entry-area.has-hover ? Theme.button.brighter(0.2) : Theme.button;
                 border-radius: 8px;
                 animate background { duration: 100ms; }
 
