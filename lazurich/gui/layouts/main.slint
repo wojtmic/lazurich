@@ -6,11 +6,14 @@ import { InstanceList, InstanceRow } from "instance_list.slint";
 export { InstanceRow }
 import { ProgressOverlay, ProgressStage } from "dialogues/progress.slint";
 export { ProgressStage }
+import { ErrorOverlay } from "dialogues/error.slint";
+
 
 export component AppWindow inherits Window {
     callback open_folder();
     callback open_theme_debug();
     callback preview_progress();
+    callback preview_error();
     callback launch_instance(string);
     in property <bool> dev: false;
     in property <string> git_hash: "";
@@ -20,6 +23,9 @@ export component AppWindow inherits Window {
     in property <string> progress-stage: "";
     in property <[ProgressStage]> progress-stages: [];
     in property <[InstanceRow]> instance-list: [];
+
+    in property <bool> error-active: false;
+    in property <string> error-text: "";
 
     title: dev ? @tr("Devurich - {}", root.git_hash)
     : @tr("Lazurich");
@@ -38,6 +44,7 @@ export component AppWindow inherits Window {
             MenuItem { title: @tr("Open theme debug"); activated => { open_theme_debug(); } }
             MenuItem { title: @tr("Open source folder"); activated => { open_folder(); } }
             MenuItem { title: @tr("Preview progress overlay"); activated => { preview_progress(); } }
+            MenuItem { title: @tr("Preview error overlay"); activated => { preview_error(); } }
         }
     }
 
@@ -63,5 +70,12 @@ export component AppWindow inherits Window {
         progress: root.progress-value;
         current-stage: root.progress-stage;
         stages: root.progress-stages;
+    }
+
+    ErrorOverlay {
+        width: 100%;
+        height: 100%;
+        active: root.error-active;
+        message: root.error-text;
     }
 }

@@ -76,6 +76,11 @@ class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppW
         self.progress_active = False
 
     @slint.callback
+    async def preview_error(self):
+        self.error_active = True
+        self.error_text = "my bad"
+
+    @slint.callback
     async def launch_instance(self, instance_id: str):
         self.progress_active = True
         self.progress_value = 0

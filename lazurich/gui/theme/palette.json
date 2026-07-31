@@ -4,6 +4,9 @@
     "background": "#191c24",
     "text": "#d9e3fa",
 
+    "fail": "#ed182a",
+    "warning": "#fae019",
+
     "button": "#0377fc",
     "sidebar": "#2c3036"
 }

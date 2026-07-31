@@ -1,0 +1,55 @@
+import { Theme } from "../theme.slint";
+import { Button } from "std-widgets.slint";
+
+export component ErrorOverlay inherits Rectangle {
+    in-out property <bool> active: false;
+    in property <string> message: "";
+
+    visible: self.opacity > 0.0;
+    background: #000000aa;
+    opacity: root.active ? 1.0 : 0.0;
+    animate opacity {
+        duration: 200ms;
+        easing: ease-in-out;
+    }
+
+    Rectangle {
+        width: min(720px, parent.width * 0.8);
+        height: min(480px, parent.height * 0.8);
+        x: (parent.width - self.width) / 2;
+        y: (parent.height - self.height) / 2;
+        background: Theme.background;
+        border-radius: 12px;
+        border-width: 1px;
+        border-color: Theme.fail;
+
+        VerticalLayout {
+            Text {
+                text: @tr("Something went wrong!");
+                color: Theme.text;
+                font-size: 24px;
+                font-weight: 600;
+                horizontal-alignment: center;
+                overflow: elide;
+            }
+            Text {
+                text: root.message;
+                color: Theme.text;
+                font-size: 16px;
+                horizontal-alignment: center;
+                overflow: elide;
+            }
+
+            HorizontalLayout {
+                alignment: end;
+                padding: 16px;
+                Button {
+                    text: @tr("OK");
+                    width: 80px;
+                    height: 40px;
+                    clicked => { root.active = false }
+                }
+            }
+        }
+    }
+}
