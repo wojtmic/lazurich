@@ -8,6 +8,8 @@ import socket
 import ctypes
 from ctypes import wintypes
 
+from loguru import logger
+
 from lazurich.api.microsoft import get_msa_token, get_xbox_live_token, get_xsts_token, get_minecraft_token, get_minecraft_profile
 from lazurich.core.instances import read_manifest
 from lazurich.core.launcher import launch_game
@@ -128,7 +130,8 @@ class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppW
         manifest = await read_manifest()
         instance = manifest[instance_id]
 
-        launch_game(instance.version, INSTANCES / instance_id / '.minecraft', profile, mc_token)
+        logger.info(f'Launching instance {instance_id}')
+        launch_game(instance.version, INSTANCES / instance_id / '.minecraft', profile, mc_token, instance.modloader, instance.modloader_version)
 
         self.progress_value = 1
         stages[5] = {"text": "Launching game", "done": True, "active": False}
