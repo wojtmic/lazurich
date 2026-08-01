@@ -9,6 +9,7 @@ from lazurich.core.models.general import ChecksumEnum, ModloaderEnum
 from lazurich.core.modloaders.fabric import get_fabric_str
 from lazurich.core.natives import get_libs_str
 from lazurich.core.paths import NATIVES, ASSETS
+from lazurich.core.renamer import renamed, rename_file
 from lazurich.core.store import get_file_by_known_name
 
 
@@ -16,14 +17,22 @@ def launch_game(ver: str, game_path: Path, profile: dict, token: str, loader: Mo
     manifest = get_for_version(ver)
     classpath = get_libs_str(ver)
     entry = 'net.minecraft.client.main.Main'
+    cmd = [
+        'java', f'-Djava.library.path={NATIVES / ver}',
+    ]
 
     if loader == ModloaderEnum.FABRIC:
         classpath += os.pathsep + get_fabric_str(ver, loader_ver)
         entry = 'net.fabricmc.loader.impl.launch.knot.KnotClient'
 
-    classpath += os.pathsep + str(get_file_by_known_name(f'client-{ver}.jar', ChecksumEnum.SHA1))
-    cmd = [
-        'java', f'-Djava.library.path={NATIVES / ver}',
+        r = renamed(f'client-{ver}.jar')
+        if not r.exists(): rename_file(get_file_by_known_name(f'client-{ver}.jar', ChecksumEnum.SHA1), f'client-{ver}.jar')
+
+        classpath += os.pathsep + str(r)
+    else:
+        classpath += os.pathsep + str(get_file_by_known_name(f'client-{ver}.jar', ChecksumEnum.SHA1))
+
+    cmd += [
         '-cp', classpath,
         entry,
         '--username', profile['name'],
@@ -35,6 +44,7 @@ def launch_game(ver: str, game_path: Path, profile: dict, token: str, loader: Mo
         '--uuid', profile['id'],
         '--userType', 'msa',
     ]
+
     logger.debug(cmd)
     cmd += ['--accessToken', token]
     return subprocess.Popen(cmd, cwd=game_path)

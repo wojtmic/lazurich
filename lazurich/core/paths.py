@@ -43,9 +43,10 @@ SHA256     = STORE / 'sha256'
 SHA512     = STORE / 'sha512'
 SHA1       = STORE / 'sha1'
 MD5        = STORE / 'md5'
+RENAMED    = STORE / 'renamed'
 
 def create_paths():
     all_dirs = [INSTANCES, STORE, ASSETS, WORKING, LOGS,
-                TEMPLATES, EXTENSIONS, SHA256, SHA512, SHA1, MD5, CONFIG_ROOT, STATE_ROOT]
+                TEMPLATES, EXTENSIONS, SHA256, SHA512, SHA1, MD5, RENAMED, CONFIG_ROOT, STATE_ROOT]
     for directory in all_dirs:
         directory.mkdir(parents=True, exist_ok=True)

@@ -178,12 +178,19 @@ def show_already_running_error():
 
 def main():
     if get_os_name() != "windows":
+        if SOCKET.exists():
+            probe = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            try:
+                probe.connect(str(SOCKET))
+                probe.close()
+                show_already_running_error()
+                return
+            except (ConnectionRefusedError, FileNotFoundError):
+                probe.close()
+                SOCKET.unlink()
+
         sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        try:
-            sock.bind(str(SOCKET))
-        except OSError:
-            show_already_running_error()
-            return
+        sock.bind(str(SOCKET))
         sock.listen(1)
     else:
         kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)

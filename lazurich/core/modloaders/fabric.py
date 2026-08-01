@@ -28,6 +28,7 @@ def make_fabric_downloads(mc_ver: str, loader_ver: str) -> list[DownloadItem]:
         for lib in all_libs
     ]
     l.append(get_fabric_download(loader_ver))
+    l.append(get_fabric_intermediary_download(mc_ver))
     return l
 
 async def download_fabric(mc_ver: str, loader_ver: str):
@@ -69,7 +70,18 @@ def get_fabric_download(loader_ver: str) -> DownloadItem:
 
     return item
 
-async def download_version_jar(loader_ver: str):
+def get_fabric_intermediary_download(mc_ver: str) -> DownloadItem:
+    checksum = httpx.get(f'https://maven.fabricmc.net/net/fabricmc/intermediary/{mc_ver}/intermediary-{mc_ver}.jar.sha1').content.decode()
+
+    item = DownloadItem(
+        checksum=checksum,
+        checksum_type=ChecksumEnum.SHA1,
+        link=f'https://maven.fabricmc.net/net/fabricmc/intermediary/{mc_ver}/intermediary-{mc_ver}.jar'
+    )
+
+    return item
+
+async def download_fabric_jar(loader_ver: str):
     file = get_fabric_download(loader_ver)
 
     path = get_file_path(file)
