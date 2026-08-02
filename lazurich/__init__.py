@@ -7,7 +7,7 @@ def get_client():
     if client is None or client.is_closed:
         client = AsyncClient(
             timeout=None,
-            headers={"User-Agent": "wojtmic/lazurich/0.0.1-alpha (lazurich.wojtmic.dev)"}
+            headers={"User-Agent": "wojtmic/lazurich/0.1.0-beta"}
         )
 
     return client
