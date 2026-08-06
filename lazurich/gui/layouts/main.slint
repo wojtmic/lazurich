@@ -4,6 +4,7 @@ import { Theme } from "theme.slint";
 export { Theme }
 import { InstanceList, InstanceRow } from "instance_list.slint";
 export { InstanceRow }
+import { InstanceEdit } from "instance_edit.slint";
 import { ProgressOverlay, ProgressStage } from "dialogues/progress.slint";
 export { ProgressStage }
 import { ErrorOverlay } from "dialogues/error.slint";
@@ -15,6 +16,7 @@ export component AppWindow inherits Window {
     callback preview_progress();
     callback preview_error();
     callback launch_instance(string);
+    callback edit_instance(string);
     in property <bool> dev: false;
     in property <string> git_hash: "";
 
@@ -23,6 +25,9 @@ export component AppWindow inherits Window {
     in property <string> progress-stage: "";
     in property <[ProgressStage]> progress-stages: [];
     in property <[InstanceRow]> instance-list: [];
+
+    in property <string> instance-edit-name: @tr("You shouldn't be seeing this! - Placeholder instance name");
+    in property <bool> instance-edit-visible: false;
 
     in property <bool> error-active: false;
     in property <string> error-text: "";
@@ -58,7 +63,13 @@ export component AppWindow inherits Window {
             InstanceList {
                 horizontal-stretch: 1;
                 instances: root.instance-list;
-                launch(id) => { root.launch_instance(id); }
+                edit(id) => { root.edit_instance(id); }
+                visible: !root.instance-edit-visible;
+            }
+            InstanceEdit {
+                horizontal-stretch: 1;
+                instance-name: root.instance-edit-name;
+                visible: root.instance-edit-visible;
             }
         }
     }

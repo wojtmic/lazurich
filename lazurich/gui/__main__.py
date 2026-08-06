@@ -139,6 +139,16 @@ class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppW
         self.progress_active = False
 
     @slint.callback
+    async def edit_instance(self, instance_id: str):
+        print('edit instance trigger')
+        manifest = await read_manifest()
+        instance = manifest[instance_id]
+
+        # self.instance_edit_id = instance_id
+        self.instance_edit_name = instance.name
+        self.instance_edit_visible = True
+
+    @slint.callback
     async def open_folder(self):
         if get_os_name() == 'windows':
             subprocess.Popen(['explorer', Path(__file__).parent])
@@ -217,3 +227,6 @@ def main():
         os.unlink(SOCKET)
     else:
         kernel32.CloseHandle(mutex)
+
+if __name__ == "__main__":
+    main()

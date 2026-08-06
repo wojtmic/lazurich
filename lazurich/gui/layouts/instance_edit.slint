@@ -1,0 +1,14 @@
+import { ListView } from "std-widgets.slint";
+import { Theme } from "theme.slint";
+
+export component InstanceEdit inherits Rectangle {
+    in property <string> instance-name: "instanc";
+    callback launch(string);
+
+    background: Theme.background;
+
+    Text {
+        text: instance-name;
+    }
+
+}

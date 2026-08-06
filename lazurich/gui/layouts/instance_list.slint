@@ -10,6 +10,7 @@ export struct InstanceRow {
 export component InstanceList inherits Rectangle {
     in property <[InstanceRow]> instances: [];
     callback launch(string);
+    callback edit(string);
 
     background: Theme.background;
 
@@ -32,7 +33,7 @@ export component InstanceList inherits Rectangle {
                 animate background { duration: 100ms; }
 
                 entry-area := TouchArea {
-                    clicked => { root.launch(row.id); }
+                    clicked => { root.edit(row.id); }
                 }
 
                 VerticalLayout {
