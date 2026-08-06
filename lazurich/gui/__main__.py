@@ -176,7 +176,7 @@ class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppW
         self._debug_window.show()
 
 
-async def load_app(app, theme_options: dict, theme_success: int):
+async def load_app(app, theme_success: int):
     if theme_success == 1:
         await app.display_error('Your theme has a version lower than the current standard! To avoid issues, the default theme has been loaded. Contact your theme\'s author and if you are, update it according to the docs!')
 
@@ -221,13 +221,13 @@ def main():
             return
 
     app = App()
-    options, theme_success = apply_theme(app, Path(__file__).parent / "theme")
+    theme_success = apply_theme(app, Path(__file__).parent / "theme")
     app.dev = os.environ.get('LAZURICH_DEV', 'false').lower() == 'true' or '--dev' in sys.argv
     app.git_hash = get_git_hash()
     # app.run()
 
     app.show()
-    slint.run_event_loop(load_app(app, options, theme_success))
+    slint.run_event_loop(load_app(app, theme_success))
     app.hide()
 
     if get_os_name() != 'windows':
