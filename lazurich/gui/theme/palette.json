@@ -10,5 +10,7 @@
     "warning": "#fae019",
 
     "button": "#2c3036",
-    "sidebar": "#2c3036"
+    "sidebar": "#2c3036",
+
+    "button_press": "#00d9ff"
 }

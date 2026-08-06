@@ -23,6 +23,12 @@ component SidebarButton inherits TouchArea {
             source: icon;
             width: parent.width;
             height: parent.height;
+
+            colorize: root.pressed
+                ? Theme.button-press
+                : white;
+
+            animate colorize { duration: 100ms; }
         }
     }
 }
