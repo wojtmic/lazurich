@@ -1,7 +1,7 @@
 {
     "version": 1,
 
-    "primary": "#03befc",
+    "primary": "#0054a3",
     "secondary": "#2c3036",
     "background": "#191c24",
     "text": "#d9e3fa",
@@ -9,6 +9,6 @@
     "fail": "#ed182a",
     "warning": "#fae019",
 
-    "button": "#0377fc",
+    "button": "#2c3036",
     "sidebar": "#2c3036"
 }

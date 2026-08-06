@@ -28,31 +28,24 @@ component SidebarButton inherits TouchArea {
 }
 
 export component Sidebar inherits Rectangle {
-    width: 96px;
+//    width: 64px;
+    width: Theme.sidebar_width.to-float() * 1px;
     background: Theme.sidebar;
     height: 100%;
 
     VerticalBox {
         SidebarButton {
             icon: Theme.dashboard-icon;
-            height: self.width;
-            width: 12%;
         }
         SidebarButton {
             icon: Theme.list-icon;
-            height: self.width;
-            width: 12%;
         }
-        Rectangle { vertical-stretch: 1; }
+        Rectangle { vertical-stretch: 1; } // spacer
         SidebarButton {
             icon: Theme.skin-icon;
-            height: self.width;
-            width: 12%;
         }
         SidebarButton {
             icon: Theme.settings-icon;
-            height: self.width;
-            width: 12%;
         }
     }
 }
