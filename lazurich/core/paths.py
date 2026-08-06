@@ -8,19 +8,21 @@ if get_os_name() != 'windows':
     storage  = os.environ.get('XDG_DATA_HOME', '~/.local/share')
     state    = os.environ.get('XDG_STATE_HOME', '~/.local/state')
     config   = os.environ.get('XDG_CONFIG_HOME', '~/.config')
+
+    SOCKET   = Path(f'/run/user/{os.getuid()}/lazurich.sock')
 else:
     usr_root = os.path.expandvars(r'C:\Users\%USERNAME%\AppData')
     storage  = os.environ.get('LOCALAPPDATA', f'{usr_root}\\Local')
     state    = os.environ.get('LOCALAPPDATA', f'{usr_root}\\Local')
     config   = os.environ.get('APPDATA', f'{usr_root}\\Roaming')
 
+    SOCKET   = None
+
 STORAGE_ROOT = Path(storage).expanduser() / 'lazurich'
 STATE_ROOT   = Path(state)  .expanduser() / 'lazurich'
 CONFIG_ROOT  = Path(config) .expanduser() / 'lazurich'
 
 WORKING      = Path(tempfile.gettempdir()) / 'lazurich'
-
-SOCKET       = Path(f'/run/user/{os.getuid()}/lazurich.sock')
 
 # Storage subdirs
 INSTANCES  = STORAGE_ROOT / 'instances'
