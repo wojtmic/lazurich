@@ -82,6 +82,11 @@ class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppW
         self.error_active = True
         self.error_text = "my bad"
 
+    async def display_error(self, err_text: str):
+        self.error_active = True
+        self.error_text = err_text
+
+
     @slint.callback
     async def launch_instance(self, instance_id: str):
         self.progress_active = True
@@ -171,7 +176,10 @@ class App(slint.load_file(Path(__file__).parent / 'layouts' / 'main.slint').AppW
         self._debug_window.show()
 
 
-async def load_instances(app):
+async def load_app(app, theme_success=0):
+    if theme_success != 0:
+        await app.display_error('Your theme has a version lower than the current standard! To avoid issues, the default theme has been loaded. Contact your theme\'s author and if you are, update it according to the docs!')
+
     manifest = await read_manifest()
     model = slint.ListModel([
         {"id": k, "name": v.name, "version": v.version}
@@ -213,13 +221,13 @@ def main():
             return
 
     app = App()
-    apply_theme(app, Path(__file__).parent / "theme")
+    theme_success = apply_theme(app, Path(__file__).parent / "theme")
     app.dev = os.environ.get('LAZURICH_DEV', 'false').lower() == 'true' or '--dev' in sys.argv
     app.git_hash = get_git_hash()
     # app.run()
 
     app.show()
-    slint.run_event_loop(load_instances(app))
+    slint.run_event_loop(load_app(app, theme_success))
     app.hide()
 
     if get_os_name() != 'windows':
