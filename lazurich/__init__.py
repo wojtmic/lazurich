@@ -1,16 +1,22 @@
-from httpx import AsyncClient
+from httpx import AsyncClient, Timeout
+from importlib.metadata import version
+
+VER_CODENAME = 'indev'
+VER = version('lazurich')
 
 client: AsyncClient | None = None
 
-def get_client():
+def get_client() -> AsyncClient:
     global client
-    if client is None or client.is_closed:
-        client = AsyncClient(
-            timeout=None,
-            headers={"User-Agent": "wojtmic/lazurich/0.1.0-beta"}
+    current = client
+    if current is None or current.is_closed:
+        current = client = AsyncClient(
+            timeout=Timeout(30, connect=5),
+            follow_redirects=True,
+            headers={"User-Agent": f"wojtmic/lazurich/{VER}-{VER_CODENAME}"},
         )
 
-    return client
+    return current
 
 async def close_client():
     global client

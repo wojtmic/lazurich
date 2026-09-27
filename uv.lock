@@ -309,6 +309,7 @@ dependencies = [
     { name = "keyring" },
     { name = "loguru" },
     { name = "msal" },
+    { name = "peewee" },
     { name = "polib" },
     { name = "slint" },
     { name = "tomli-w" },
@@ -329,6 +330,7 @@ requires-dist = [
     { name = "keyring", specifier = ">=25.7.0" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "msal", specifier = ">=1.37.0" },
+    { name = "peewee", specifier = ">=4.5.1" },
     { name = "polib", specifier = ">=1.2.0" },
     { name = "slint", specifier = ">=1.17.1b2" },
     { name = "tomli-w", specifier = ">=1.2.0" },
@@ -385,6 +387,15 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/a1/d4/1fc4078c65507b51b96ca8f8c3ba19e6a61c8253c72794544580a7b6c24d/packaging-25.0.tar.gz", hash = "sha256:d443872c98d677bf60f6a1f2f8c1cb748e8fe762d2bf9d3148b5599295b0fc4f", size = 165727, upload-time = "2025-04-19T11:48:59.673Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/20/12/38679034af332785aac8774540895e234f4d07f7545804097de4b666afd8/packaging-25.0-py3-none-any.whl", hash = "sha256:29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484", size = 66469, upload-time = "2025-04-19T11:48:57.875Z" },
+]
+
+[[package]]
+name = "peewee"
+version = "4.5.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/ed/9b/74f549937d7edfb75742f426347a7483b0aab70909e2250e44f067027094/peewee-4.5.1.tar.gz", hash = "sha256:8005cb45c54e1a282a2f24ddd583f0f7a80cd5d9c635d50d63f57c11d88c392a", size = 823179, upload-time = "2026-09-08T01:20:10.449Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/13/90/3ddf6ef69090c63b6fe0d42b41e5dd3323d95dfe01eda6766305337be862/peewee-4.5.1-py3-none-any.whl", hash = "sha256:dbbdc93e9be08d1df49ceed48dc5d609bfeda6112848086f1f6c1f1debe70975", size = 193883, upload-time = "2026-09-08T01:20:09.027Z" },
 ]
 
 [[package]]
