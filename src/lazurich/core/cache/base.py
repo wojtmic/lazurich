@@ -1,5 +1,5 @@
 from peewee import Model
-from lazurich.core.cache import db
+from lazurich.core.cache.db import db
 
 class BaseModel(Model):
     class Meta:

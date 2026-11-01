@@ -1,5 +1,6 @@
 from pathlib import Path
 import platform
+import os
 
 plat = platform.system()
 
@@ -13,3 +14,5 @@ else:
     l = USER_ROOT / 'AppData'
     DATA_ROOT = l / 'Roaming' / 'lazurich'
     CACHE_FILE = DATA_ROOT / 'cache.db'
+
+if os.environ.get('LAZURICH_CACHE_FILE'): CACHE_FILE = Path(os.environ.get('LAZURICH_CACHE_FILE')).expanduser()

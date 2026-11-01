@@ -1,7 +1,5 @@
 from enum import IntFlag
-
 from peewee import IntegerField, CharField, DateTimeField, ForeignKeyField, JSONField, CompositeKey
-
 from lazurich.core.cache.base import BaseModel
 
 class Platform(IntFlag):
@@ -43,7 +41,6 @@ class Version(BaseModel):
     type = CharField(index=True)
     release_time = DateTimeField(index=True)
     time = DateTimeField()
-    meta_url = CharField()
     meta_sha1 = CharField()
     compliance_level = IntegerField(default=0)
 
