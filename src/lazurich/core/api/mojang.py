@@ -12,7 +12,6 @@ c = client()
 
 PISTON_BASE = 'https://piston-meta.mojang.com/'
 
-
 async def manifests():
     logger.debug('Fetching version manifest')
     resp = await c.get(PISTON_BASE + 'mc/game/version_manifest_v2.json')
@@ -40,7 +39,6 @@ async def manifests():
             ).execute()
             logger.debug(v)
 
-
 def cache_ver(data: dict):
     ai = data['assetIndex']
     _, created = AssetIndex.get_or_create(
@@ -61,7 +59,6 @@ def cache_ver(data: dict):
         f'java={java["component"]} ({java["majorVersion"]})'
     )
 
-
 def _link(vid, pos, name, info, kind, rules=None, exclude=None):
     lib, created = Library.get_or_create(
         name=name,
@@ -77,7 +74,6 @@ def _link(vid, pos, name, info, kind, rules=None, exclude=None):
     )
     VersionLibrary.create(version=vid, library=lib, position=pos)
     logger.debug(f'  [{pos}] {kind} {name}{" (new)" if created else ""}')
-
 
 def cache_libs(data: dict):
     vid, pos = data['id'], count()
@@ -107,7 +103,6 @@ def cache_libs(data: dict):
         path = f'com/mojang/minecraft/{vid}/minecraft-{vid}-client.jar'
         _link(vid, next(pos), f'com.mojang:minecraft:{vid}:client', {**cl, 'path': path}, 'client')
 
-
 async def get_for_version(ver: str, hash: str):
     logger.debug(f'Fetching version JSON for {ver} ({hash})')
     resp = await c.get(PISTON_BASE + 'v1/packages/' + hash + '/' + ver + '.json')
@@ -118,7 +113,6 @@ async def get_for_version(ver: str, hash: str):
         cache_libs(data)
         Version.update(detail_sha1=hash).where(Version.id == ver).execute()
     logger.debug(f'Cached {ver}')
-
 
 if __name__ == '__main__':
     from lazurich.core.cache.db import init_db

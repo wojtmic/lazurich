@@ -35,5 +35,4 @@ line-length = 100
 [tool.ruff.lint]
 select = ["I", 'B', 'SIM', 'E4', 'E9', 'UP', 'ASYNC', 'F']
 
-[tool.ruff.format]
-quote-style = "single"
+# Note: do not use ruff format, ever

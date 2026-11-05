@@ -4,7 +4,6 @@ from lazurich.core.paths import CACHE_FILE
 
 db = SqliteDatabase(None, pragmas={'journal_mode': 'wal', 'foreign_keys': 1})
 
-
 def init_db():
     db.init(CACHE_FILE)
     db.connect()

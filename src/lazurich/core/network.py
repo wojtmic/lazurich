@@ -4,7 +4,6 @@ from lazurich.core.consts import CODENAME, VERSION
 
 _client: httpx.AsyncClient | None = None
 
-
 def client() -> httpx.AsyncClient:
     global _client
     if _client is None:
@@ -15,7 +14,6 @@ def client() -> httpx.AsyncClient:
             timeout=httpx.Timeout(30, connect=10),
         )
     return _client
-
 
 async def close():
     global _client
