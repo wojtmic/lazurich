@@ -1,4 +1,5 @@
 import json
+import platform
 from datetime import datetime
 from itertools import count
 
@@ -59,7 +60,29 @@ def cache_ver(data: dict):
         f'java={java["component"]} ({java["majorVersion"]})'
     )
 
-def _link(vid, pos, name, info, kind, rules=None, exclude=None):
+OS_NAME = {'Linux': 'linux', 'Darwin': 'osx', 'Windows': 'windows'}[platform.system()]
+IS_X86 = platform.machine().lower() in ('i386', 'i686', 'x86')
+ARCH = {'x86_64': 'x86_64', 'amd64': 'x86_64', 'aarch64': 'aarch_64', 'arm64': 'aarch_64',
+        'i386': 'x86', 'i686': 'x86'}.get(platform.machine().lower())
+
+def _rule_matches(rule: dict) -> bool:
+    if 'features' in rule:
+        return False
+    os = rule.get('os', {})
+    if 'name' in os and os['name'] != OS_NAME:
+        return False
+    return not ('arch' in os and os['arch'] != ARCH)
+
+def _allowed(rules: list[dict] | None) -> bool:
+    if not rules:
+        return True
+    allowed = False
+    for rule in rules:
+        if _rule_matches(rule):
+            allowed = rule['action'] == 'allow'
+    return allowed
+
+def _link(vid, pos, name, info, kind, exclude=None):
     lib, created = Library.get_or_create(
         name=name,
         defaults=dict(
@@ -68,7 +91,6 @@ def _link(vid, pos, name, info, kind, rules=None, exclude=None):
             url=info['url'],
             sha1=info['sha1'],
             size=info['size'],
-            rules=rules,
             extract_exclude=exclude,
         ),
     )
@@ -80,24 +102,19 @@ def cache_libs(data: dict):
     VersionLibrary.delete().where(VersionLibrary.version == vid).execute()
     logger.debug(f'Linking {len(data["libraries"])} library entries for {vid}')
     for lib in data['libraries']:
+        if not _allowed(lib.get('rules')):
+            logger.debug(f'  skipped {lib["name"]} (rules)')
+            continue
         dl = lib['downloads']
-        if 'natives' in lib:
-            for os_name, cls in lib['natives'].items():
-                cls = cls.replace('${arch}', '64')
-                if info := dl.get('classifiers', {}).get(cls):
-                    _link(
-                        vid,
-                        next(pos),
-                        f'{lib["name"]}:{cls}',
-                        info,
-                        'native',
-                        [{'action': 'allow', 'os': {'name': os_name}}],
-                        lib.get('extract', {}).get('exclude'),
-                    )
-                else:
-                    logger.debug(f'  missing classifier {cls} for {lib["name"]}')
+        if cls := lib.get('natives', {}).get(OS_NAME):
+            cls = cls.replace('${arch}', '32' if IS_X86 else '64')
+            if info := dl.get('classifiers', {}).get(cls):
+                _link(vid, next(pos), f'{lib["name"]}:{cls}', info, 'native',
+                      lib.get('extract', {}).get('exclude'))
+            else:
+                logger.debug(f'  missing classifier {cls} for {lib["name"]}')
         if 'artifact' in dl:
-            _link(vid, next(pos), lib['name'], dl['artifact'], 'library', lib.get('rules'))
+            _link(vid, next(pos), lib['name'], dl['artifact'], 'library')
 
     if cl := data.get('downloads', {}).get('client'):
         path = f'com/mojang/minecraft/{vid}/minecraft-{vid}-client.jar'
@@ -121,4 +138,5 @@ if __name__ == '__main__':
     import asyncio
 
     # asyncio.run(manifests())
-    asyncio.run(get_for_version('26.1.2', '8f9f3c548c892ce41b78561138aeba112cba3490'))
+    v = Version.get_by_id("26.1.2")
+    asyncio.run(get_for_version(v.id, v.meta_sha1))
